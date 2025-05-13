@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:vistacall/home.dart';
 import 'package:vistacall/welcomeScreen1.dart';
 
 class Splashscreen extends StatefulWidget {
