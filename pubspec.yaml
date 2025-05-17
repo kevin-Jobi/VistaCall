@@ -76,6 +76,11 @@ flutter:
     - assets/images/neuro.png
     - assets/images/logo.png
     - assets/images/ws1.png
+    - assets/images/ws2.png
+    - assets/images/ws3.png
+    - assets/images/google_logo.png
+    - assets/images/signup_image.png
+    - assets/images/signin_image.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

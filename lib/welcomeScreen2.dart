@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:vistacall/welcomeScreen2.dart';
 
-class Welcomescreen1 extends StatefulWidget {
-  const Welcomescreen1({super.key});
+class Welcomescreen2 extends StatefulWidget {
+  const Welcomescreen2({super.key});
 
   @override
-  State<Welcomescreen1> createState() => _Welcomescreen1State();
+  State<Welcomescreen2> createState() => _Welcomescreen2State();
 }
 
-class _Welcomescreen1State extends State<Welcomescreen1> {
+class _Welcomescreen2State extends State<Welcomescreen2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,10 +17,10 @@ class _Welcomescreen1State extends State<Welcomescreen1> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 40),
-            Image.asset('assets/images/ws1.png', width: 285, height: 280),
+            Image.asset('assets/images/ws2.png', width: 285, height: 280),
             const SizedBox(height: 1),
             const Text(
-              'Welcome to Your Health \n Companion \n"Easily track symptoms, \n medications, and \n appointments, and book \n expert doctors to guide \n your wellness  journey.\n Your well-being, now just\n a few taps away."',
+              'Expert Care, Anytime,\n Anywhere\n "Access a network of\n trusted doctors and\n health tools to manage\n your symptoms,\n medications, and\n  appointments, ready to\n support your wellness\n journey when you need\n it."',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 22,
@@ -45,15 +44,10 @@ class _Welcomescreen1State extends State<Welcomescreen1> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Welcomescreen2()),
-          );
-        },
-        backgroundColor: const Color.fromARGB(255, 88, 168, 233),
-        shape: CircleBorder(),
+        onPressed: () {},
+        backgroundColor: Colors.white,
         child: Icon(Icons.arrow_forward),
+        // shape: CircleBorder(),
       ),
     );
   }

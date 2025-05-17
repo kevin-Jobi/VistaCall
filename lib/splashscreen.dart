@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:vistacall/welcomeScreen1.dart';
 
 class Splashscreen extends StatefulWidget {
   const Splashscreen({super.key});
@@ -13,12 +12,9 @@ class _SplashscreenState extends State<Splashscreen> {
   initState() {
     super.initState();
     // Navigate to homeScreen after 3 sec
-    Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const Welcomescreen1()),
-      );
-    });
+Future.delayed(const Duration(seconds: 3), () {
+  Navigator.pushReplacementNamed(context, '/welcome');
+});
   }
 
   @override

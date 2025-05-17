@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "114152481636",
+    "project_id": "vistacall-83230",
+    "storage_bucket": "vistacall-83230.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:114152481636:android:faa39073ee299bada6d071",
+        "android_client_info": {
+          "package_name": "com.example.vistacall"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "114152481636-rompgn3ek0tbj85qmbnumsi3m2mpd272.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vistacall",
+            "certificate_hash": "511739c0543bf91830b96c295f4853c903c13746"
+          }
+        },
+        {
+          "client_id": "114152481636-k1v6jhcefgpsjj8q8s5inm6j9o54o9up.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsRXoy0lW27eX1jO_g8q72qIfYe8rkGCg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "114152481636-k1v6jhcefgpsjj8q8s5inm6j9o54o9up.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
