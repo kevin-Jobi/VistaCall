@@ -1,7 +1,10 @@
+
+
 // import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:vistacall/bloc/home_bloc.dart';
 // import 'package:vistacall/viewmodels/home_viewmodel.dart';
+// import 'package:vistacall/presentation/screens/appointments_screen.dart';
 
 // class Home extends StatelessWidget {
 //   const Home({super.key});
@@ -87,7 +90,7 @@
 //                       const Text(
 //                         'FIND YOUR DOCTOR',
 //                         style: TextStyle(
-//                           fontSize: 21,
+//                           fontSize: 22,
 //                           fontWeight: FontWeight.bold,
 //                           color: Colors.blue,
 //                         ),
@@ -185,7 +188,9 @@
 //         ],
 //       ),
 //       floatingActionButton: FloatingActionButton(
-//         onPressed: () {},
+//         onPressed: () {
+//           Navigator.pushNamed(context, '/chat');
+//         },
 //         backgroundColor: const Color.fromARGB(255, 11, 142, 242),
 //         shape: CircleBorder(),
 //         child: Image.asset('assets/images/logo.png'),
@@ -243,18 +248,12 @@
 //             ),
 //           ],
 //           onTap: (index) {
-//             if (index == 3) {
-//               Navigator.pushNamed(context, '/profile');
-//             } else if (index == 1) {
-//               ScaffoldMessenger.of(context).showSnackBar(
-//                 const SnackBar(
-//                   content: Text('Appointment feature coming soon!'),
-//                 ),
-//               );
+//             if (index == 1) {
+//               Navigator.pushReplacementNamed(context, '/appointments');
 //             } else if (index == 2) {
-//               ScaffoldMessenger.of(context).showSnackBar(
-//                 const SnackBar(content: Text('Messages feature coming soon!')),
-//               );
+//               Navigator.pushReplacementNamed(context, '/messages');
+//             } else if (index == 3) {
+//               Navigator.pushReplacementNamed(context, '/profile');
 //             }
 //           },
 //         ),
@@ -285,11 +284,15 @@
 //   }
 // }
 
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vistacall/bloc/home_bloc.dart';
+import 'package:vistacall/presentation/widgets/doctor_grid_item.dart';
+
 import 'package:vistacall/viewmodels/home_viewmodel.dart';
-import 'package:vistacall/appointments_screen.dart';
+import 'package:vistacall/utils/constants.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -301,7 +304,7 @@ class Home extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: AppConstants.primaryColor,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -312,21 +315,17 @@ class Home extends StatelessWidget {
                 const SizedBox(width: 5),
                 DropdownButton<String>(
                   value: 'Bangalore',
-                  dropdownColor: Colors.blue,
+                  dropdownColor: AppConstants.primaryColor,
                   style: const TextStyle(color: Colors.white),
                   icon: const Icon(Icons.arrow_drop_down, color: Colors.white),
                   underline: Container(),
-                  items:
-                      <String>[
-                        'Bangalore',
-                        'Mumbai',
-                        'Delhi',
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+                  items: <String>['Bangalore', 'Mumbai', 'Delhi']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                   onChanged: (_) {},
                 ),
               ],
@@ -337,7 +336,7 @@ class Home extends StatelessWidget {
                 icon: const Icon(Icons.person),
                 color: Colors.white,
                 onPressed: () {
-                  Navigator.pushNamed(context, '/profile');
+                  Navigator.pushNamed(context, AppConstants.profileRoute);
                 },
               ),
             ),
@@ -372,12 +371,12 @@ class Home extends StatelessWidget {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'FIND YOUR DOCTOR',
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
-                          color: Colors.blue,
+                          color: AppConstants.primaryColor,
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -389,7 +388,7 @@ class Home extends StatelessWidget {
                             borderRadius: BorderRadius.circular(30),
                           ),
                           filled: true,
-                          fillColor: const Color.fromARGB(255, 249, 248, 248),
+                          fillColor: AppConstants.greyBackground,
                         ),
                       ),
                       const SizedBox(height: 20),
@@ -405,13 +404,37 @@ class Home extends StatelessWidget {
                         crossAxisCount: 4,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        children: List.generate(doctorCategories.length, (
-                          index,
-                        ) {
+                        children: List.generate(doctorCategories.length, (index) {
                           final category = doctorCategories[index];
-                          return _buildGridItem(
-                            category.title,
-                            category.imagePath,
+                          return GestureDetector(
+                            onTap: () {
+                              String department;
+                              switch (category.title.toLowerCase()) {
+                                case 'heart':
+                                  department = 'Cardiology';
+                                  break;
+                                case 'skin':
+                                  department = 'Dermatology';
+                                  break;
+                                case 'brain':
+                                  department = 'Neurology';
+                                  break;
+                                case 'child':
+                                  department = 'Pediatrics';
+                                  break;
+                                default:
+                                  department = category.title;
+                              }
+                              Navigator.pushNamed(
+                                context,
+                                AppConstants.doctorsRoute,
+                                arguments: department,
+                              );
+                            },
+                            child: DoctorGridItem(
+                              title: category.title,
+                              imagePath: category.imagePath,
+                            ),
                           );
                         }),
                       ),
@@ -474,15 +497,15 @@ class Home extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/chat');
+          Navigator.pushNamed(context, AppConstants.chatRoute);
         },
-        backgroundColor: const Color.fromARGB(255, 11, 142, 242),
-        shape: CircleBorder(),
+        backgroundColor: AppConstants.primaryColor,
+        shape: const CircleBorder(),
         child: Image.asset('assets/images/logo.png'),
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppConstants.backgroundColor,
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.1),
@@ -496,8 +519,8 @@ class Home extends StatelessWidget {
           ),
         ),
         child: BottomNavigationBar(
-          currentIndex: 0, // Home tab selected
-          selectedItemColor: const Color(0xFF4A90E2), // Blue
+          currentIndex: 0,
+          selectedItemColor: AppConstants.primaryColor,
           unselectedItemColor: Colors.grey.shade500,
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -534,37 +557,15 @@ class Home extends StatelessWidget {
           ],
           onTap: (index) {
             if (index == 1) {
-              Navigator.pushReplacementNamed(context, '/appointments');
+              Navigator.pushReplacementNamed(context, AppConstants.appointmentsRoute);
             } else if (index == 2) {
-              Navigator.pushReplacementNamed(context, '/messages');
+              Navigator.pushReplacementNamed(context, AppConstants.messagesRoute);
             } else if (index == 3) {
-              Navigator.pushReplacementNamed(context, '/profile');
+              Navigator.pushReplacementNamed(context, AppConstants.profileRoute);
             }
           },
         ),
       ),
-    );
-  }
-
-  Widget _buildGridItem(String title, String imagePath) {
-    return Column(
-      children: [
-        CircleAvatar(
-          backgroundColor: Colors.blue[100],
-          child: Image.asset(
-            imagePath,
-            width: 45,
-            height: 45,
-            fit: BoxFit.contain,
-          ),
-        ),
-        const SizedBox(height: 5),
-        Text(
-          title,
-          textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 12),
-        ),
-      ],
     );
   }
 }

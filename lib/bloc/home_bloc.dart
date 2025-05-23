@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../models/doctor_category.dart';
-import '../models/appointment.dart';
+import '../data/models/doctor_category.dart';
+import '../data/models/appointment.dart';
 part 'home_event.dart';
 part 'home_state.dart';
 

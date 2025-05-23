@@ -1,6 +1,6 @@
 import '../bloc/home_bloc.dart';
-import '../models/doctor_category.dart';
-import '../models/appointment.dart';
+import '../data/models/doctor_category.dart';
+import '../data/models/appointment.dart';
 
 class HomeViewModel {
   final HomeBloc _homeBloc;
@@ -40,3 +40,6 @@ class HomeViewModel {
     return state is HomeLoading;
   }
 }
+
+
+
