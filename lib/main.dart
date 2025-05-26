@@ -50,6 +50,7 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (context) => DoctorListBloc()),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Vistacall',
         theme: ThemeData(
           primaryColor: AppConstants.primaryColor,
