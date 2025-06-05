@@ -188,6 +188,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vistacall/presentation/widgets/custom_elevated_button.dart.dart';
 import 'package:vistacall/viewmodels/welcome_bloc.dart';
 import 'package:vistacall/utils/constants.dart';
 
@@ -238,28 +239,17 @@ class WelcomeScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 40),
-                  ElevatedButton(
+
+                  CustomElevatedButton(
                     onPressed: () {
-                      welcomeBloc.add(NavigateToAuthEvent());
+                      Navigator.pushNamed(context, AppConstants.authRoute);
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      foregroundColor: AppConstants.primaryColor,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 40,
-                        vertical: 16,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    child: const Text(
-                      'Get Started',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    text: 'Get Started',
+                    backgroundColor: Colors.white,
+                    foregroundColor: AppConstants.primaryColor,
+                    borderRadius: 30,
+                    fontSize: 18,
+                    height: 56,
                   ),
                 ],
               ),

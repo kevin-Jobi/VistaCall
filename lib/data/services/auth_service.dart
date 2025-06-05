@@ -64,15 +64,18 @@ class AuthService {
 
   Future<bool> logout() async {
     try {
+      print('Attempting to sign out from Google...');
       await _googleSignIn.signOut();
+      print('Google sign-out completed.');
+
+      print('Attempting to sign out from Firebase Auth...');
       await _auth.signOut();
-      if (_auth.currentUser == null) {
-        return true;
-      } else {
-        errorMessage = 'Failed to fully sign out user';
-        return false;
-      }
+      print('Firebase Auth sign-out completed.');
+
+      // We rely on splash_bloc.dart to verify auth state on app restart
+      return true;
     } catch (e) {
+      print('Logout failed with error: $e');
       errorMessage = e.toString();
       return false;
     }

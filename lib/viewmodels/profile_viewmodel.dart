@@ -1,0 +1,78 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vistacall/viewmodels/profile_bloc.dart';
+
+class ProfileViewModel {
+  final ProfileBloc profileBloc;
+
+  ProfileViewModel(this.profileBloc) {
+    loadProfile();
+  }
+
+  void loadProfile() {
+    profileBloc.add(LoadProfileEvent());
+  }
+
+  bool isLoading(ProfileState state) {
+    return state is ProfileLoadingState;
+  }
+
+  String? getErrorMessage(ProfileState state) {
+    if (state is ProfileErrorState) {
+      return state.error;
+    }
+    return null;
+  }
+
+  String getName(ProfileState state) {
+    if (state is ProfileLoadedState) {
+      return state.name;
+    }
+    return '';
+  }
+
+  String getEmail(ProfileState state) {
+    if (state is ProfileLoadedState) {
+      return state.email;
+    }
+    return '';
+  }
+
+  String? getPhotoUrl(ProfileState state) {
+    if (state is ProfileLoadedState) {
+      return state.photoUrl;
+    }
+    return null;
+  }
+
+  Future<bool> confirmLogout(BuildContext context) async {
+    final confirmLogout = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Confirm Logout'),
+        content: const Text('Are you sure you want to logout?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text(
+              'Cancel',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text(
+              'Logout',
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        ],
+      ),
+    );
+    return confirmLogout ?? false;
+  }
+
+  void logout() {
+    profileBloc.add(LogoutEvent());
+  }
+}

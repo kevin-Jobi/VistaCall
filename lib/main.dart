@@ -14,6 +14,7 @@ import 'package:vistacall/presentation/screens/doctor_list_screen.dart';
 import 'package:vistacall/presentation/screens/wrapper.dart';
 import 'package:vistacall/viewmodels/auth_viewmodel.dart';
 import 'package:vistacall/viewmodels/doctor_list_bloc.dart';
+import 'package:vistacall/viewmodels/password_visibility_bloc.dart';
 import 'package:vistacall/viewmodels/profile_bloc.dart';
 import 'package:vistacall/viewmodels/appointments_bloc.dart';
 import 'package:vistacall/viewmodels/messages_bloc.dart';
@@ -48,6 +49,7 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (context) => MessagesBloc()),
         BlocProvider(create: (context) => ChatBloc()),
         BlocProvider(create: (context) => DoctorListBloc()),
+        BlocProvider(create: (context) => PasswordVisibilityBloc())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

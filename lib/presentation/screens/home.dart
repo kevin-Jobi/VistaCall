@@ -1,5 +1,3 @@
-
-
 // import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:vistacall/bloc/home_bloc.dart';
@@ -284,11 +282,10 @@
 //   }
 // }
 
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vistacall/bloc/home_bloc.dart';
+import 'package:vistacall/presentation/widgets/custom_textfield.dart';
 import 'package:vistacall/presentation/widgets/doctor_grid_item.dart';
 
 import 'package:vistacall/viewmodels/home_viewmodel.dart';
@@ -319,13 +316,17 @@ class Home extends StatelessWidget {
                   style: const TextStyle(color: Colors.white),
                   icon: const Icon(Icons.arrow_drop_down, color: Colors.white),
                   underline: Container(),
-                  items: <String>['Bangalore', 'Mumbai', 'Delhi']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
+                  items:
+                      <String>[
+                        'Bangalore',
+                        'Mumbai',
+                        'Delhi',
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
                   onChanged: (_) {},
                 ),
               ],
@@ -380,16 +381,9 @@ class Home extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Search doctors, specialties...',
-                          prefixIcon: const Icon(Icons.search),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          filled: true,
-                          fillColor: AppConstants.greyBackground,
-                        ),
+                      CustomTextField(
+                        hintText: 'Search doctors, specialties...',
+                        prefixIcon: Icons.search,
                       ),
                       const SizedBox(height: 20),
                       const Text(
@@ -404,7 +398,9 @@ class Home extends StatelessWidget {
                         crossAxisCount: 4,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        children: List.generate(doctorCategories.length, (index) {
+                        children: List.generate(doctorCategories.length, (
+                          index,
+                        ) {
                           final category = doctorCategories[index];
                           return GestureDetector(
                             onTap: () {
@@ -557,11 +553,20 @@ class Home extends StatelessWidget {
           ],
           onTap: (index) {
             if (index == 1) {
-              Navigator.pushReplacementNamed(context, AppConstants.appointmentsRoute);
+              Navigator.pushReplacementNamed(
+                context,
+                AppConstants.appointmentsRoute,
+              );
             } else if (index == 2) {
-              Navigator.pushReplacementNamed(context, AppConstants.messagesRoute);
+              Navigator.pushReplacementNamed(
+                context,
+                AppConstants.messagesRoute,
+              );
             } else if (index == 3) {
-              Navigator.pushReplacementNamed(context, AppConstants.profileRoute);
+              Navigator.pushReplacementNamed(
+                context,
+                AppConstants.profileRoute,
+              );
             }
           },
         ),

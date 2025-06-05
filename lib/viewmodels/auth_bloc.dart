@@ -385,6 +385,41 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
       }
     });
+
+    on<TogglePasswordVisibilityEvent>((event, emit) {
+      if (state is Authenticated) {
+        emit(Authenticated(isPasswordVisible: !state.isPasswordVisible));
+      } else if (state is AuthLoading) {
+        emit(
+          AuthLoading(
+            isSignUpMode: state.isSignUpMode,
+            isPasswordVisible: !state.isPasswordVisible,
+          ),
+        );
+      } else if (state is AuthError) {
+        emit(
+          AuthError(
+            state.errorMessage!,
+            isSignUpMode: state.isSignUpMode,
+            isPasswordVisible: !state.isPasswordVisible,
+          ),
+        );
+      } else if (state is ResetPasswordSuccess) {
+        emit(
+          ResetPasswordSuccess(
+            isSignUpMode: state.isSignUpMode,
+            isPasswordVisible: !state.isPasswordVisible,
+          ),
+        );
+      } else {
+        emit(
+          Unauthenticated(
+            isSignUpMode: state.isSignUpMode,
+            isPasswordVisible: !state.isPasswordVisible,
+          ),
+        );
+      }
+    });
   }
 
   @override

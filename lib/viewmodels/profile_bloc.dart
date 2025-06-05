@@ -52,20 +52,20 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       }
     });
 
-    // on<LogoutEvent>((event, emit) async {
-    //   emit(ProfileLoadingState());
-    //   try {
-    //     bool success = await authViewModel.logout();
-    //     if (success) {
-    //       emit(ProfileLoggedOutState());
-    //     } else {
-    //       emit(
-    //         ProfileErrorState(authViewModel.errorMessage ?? 'Logout failed'),
-    //       );
-    //     }
-    //   } catch (e) {
-    //     emit(ProfileErrorState('Logout failed: $e'));
-    //   }
-    // });
+    on<LogoutEvent>((event, emit) async {
+      emit(ProfileLoadingState());
+      try {
+        bool success = await authViewModel.logout();
+        if (success) {
+          emit(ProfileLoggedOutState());
+        } else {
+          emit(
+            ProfileErrorState(authViewModel.errorMessage ?? 'Logout failed'),
+          );
+        }
+      } catch (e) {
+        emit(ProfileErrorState('Logout failed: $e'));
+      }
+    });
   }
 }

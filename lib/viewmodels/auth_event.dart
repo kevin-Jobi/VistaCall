@@ -77,6 +77,8 @@ class ToggleAuthModeEvent extends AuthEvent {
   const ToggleAuthModeEvent();
 }
 
+class TogglePasswordVisibilityEvent extends AuthEvent {}
+
 class LogoutEvent extends AuthEvent {
   const LogoutEvent();
 }
