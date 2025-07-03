@@ -1,4 +1,4 @@
-import '../bloc/home_bloc.dart';
+import '../bloc/home/home_bloc.dart';
 import '../data/models/doctor_category.dart';
 import '../data/models/appointment.dart';
 

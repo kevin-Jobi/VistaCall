@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vistacall/presentation/screens/auth_screen.dart';
 import 'package:vistacall/presentation/screens/home.dart';
 import 'package:vistacall/utils/constants.dart';
-import 'package:vistacall/viewmodels/auth_bloc.dart';
-import 'package:vistacall/viewmodels/auth_state.dart';
+import 'package:vistacall/bloc/auth/auth_bloc.dart';
+import 'package:vistacall/bloc/auth/auth_state.dart';
 
 class AppWrapper extends StatelessWidget {
   const AppWrapper({super.key});

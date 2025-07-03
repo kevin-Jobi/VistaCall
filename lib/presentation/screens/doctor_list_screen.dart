@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vistacall/data/models/doctor.dart';
-import 'package:vistacall/viewmodels/doctor_list_bloc.dart';
+import 'package:vistacall/bloc/doctor_list/doctor_list_bloc.dart';
 import 'package:vistacall/utils/constants.dart';
 
 class DoctorListScreen extends StatelessWidget {

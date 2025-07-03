@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vistacall/presentation/widgets/custom_textfield.dart';
 import 'package:vistacall/utils/constants.dart';
-import 'package:vistacall/viewmodels/auth_bloc.dart';
-import 'package:vistacall/viewmodels/auth_event.dart';
-import 'package:vistacall/viewmodels/auth_state.dart';
+import 'package:vistacall/bloc/auth/auth_bloc.dart';
+import 'package:vistacall/bloc/auth/auth_event.dart';
+import 'package:vistacall/bloc/auth/auth_state.dart';
 import 'package:vistacall/viewmodels/auth_viewmodel.dart';
 
 class AuthScreen extends StatelessWidget {

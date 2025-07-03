@@ -46,8 +46,8 @@ flutter {
 dependencies {
 
   // Import the Firebase BoM
-
-  implementation(platform("com.google.firebase:firebase-bom:33.13.0"))
+  implementation(platform("com.google.firebase:firebase-bom:33.2.0"))
+//   implementation(platform("com.google.firebase:firebase-bom:33.13.0"))
 
 
   // TODO: Add the dependencies for Firebase products you want to use
@@ -59,6 +59,7 @@ dependencies {
   implementation("com.google.firebase:firebase-auth-ktx")
 
   // Add the dependencies for any other desired Firebase products
+  implementation ("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.9.0") // Use the latest version
 
   // https://firebase.google.com/docs/android/setup#available-libraries
 

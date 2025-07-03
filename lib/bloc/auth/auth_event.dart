@@ -1,32 +1,4 @@
-// abstract class AuthEvent {}
 
-// class SignInEvent extends AuthEvent {
-//   final String email;
-//   final String password;
-
-//   SignInEvent(this.email, this.password);
-// }
-
-// class SignUpEvent extends AuthEvent {
-//   final String email;
-//   final String password;
-
-//   SignUpEvent(this.email, this.password);
-// }
-
-// class SignInWithGoogleEvent extends AuthEvent {}
-
-// class ResetPasswordEvent extends AuthEvent {
-//   final String email;
-
-//   ResetPasswordEvent(this.email);
-// }
-
-// class ToggleAuthModeEvent extends AuthEvent {}
-
-// // Add to your auth_event.dart
-// class LogoutEvent extends AuthEvent {}
-//--------------------------------------------------------------
 import 'package:equatable/equatable.dart';
 
 abstract class AuthEvent extends Equatable {
