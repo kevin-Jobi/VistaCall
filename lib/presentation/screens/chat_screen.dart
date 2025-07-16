@@ -1,10 +1,8 @@
-
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vistacall/data/models/message.dart';
 import 'package:vistacall/bloc/chat/chat_bloc.dart';
+import 'package:vistacall/bloc/chat/chat_event.dart';
+import 'package:vistacall/bloc/chat/chat_state.dart';
 import 'package:vistacall/utils/constants.dart';
 
 class ChatScreen extends StatelessWidget {

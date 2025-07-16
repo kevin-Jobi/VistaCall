@@ -1,32 +1,10 @@
-import 'package:bloc/bloc.dart';
+
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vistacall/bloc/profile/profile_event.dart';
+import 'package:vistacall/bloc/profile/profile_state.dart';
 import 'package:vistacall/viewmodels/auth_viewmodel.dart';
-
-abstract class ProfileEvent {}
-
-class LoadProfileEvent extends ProfileEvent {}
-
-class LogoutEvent extends ProfileEvent {}
-
-abstract class ProfileState {}
-
-class ProfileLoadingState extends ProfileState {}
-
-class ProfileLoadedState extends ProfileState {
-  final String name;
-  final String email;
-  final String? photoUrl;
-
-  ProfileLoadedState({required this.name, required this.email, this.photoUrl});
-}
-
-class ProfileErrorState extends ProfileState {
-  final String error;
-
-  ProfileErrorState(this.error);
-}
-
-class ProfileLoggedOutState extends ProfileState {}
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final AuthViewmodel authViewModel;

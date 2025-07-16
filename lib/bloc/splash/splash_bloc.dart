@@ -1,20 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:vistacall/bloc/splash/splash_event.dart';
+import 'package:vistacall/bloc/splash/splash_state.dart';
 import 'package:vistacall/utils/constants.dart';
-
-abstract class SplashEvent {}
-
-class StartSplashEvent extends SplashEvent {}
-
-abstract class SplashState {}
-
-class SplashLoadingState extends SplashState {}
-
-class SplashNavigateState extends SplashState {
-  final String route;
-
-  SplashNavigateState(this.route);
-}
 
 class SplashBloc extends Bloc<SplashEvent, SplashState> {
   SplashBloc() : super(SplashLoadingState()) {

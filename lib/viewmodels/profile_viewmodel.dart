@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vistacall/bloc/profile/profile_bloc.dart';
+import 'package:vistacall/bloc/profile/profile_event.dart';
+import 'package:vistacall/bloc/profile/profile_state.dart';
 
 class ProfileViewModel {
   final ProfileBloc profileBloc;

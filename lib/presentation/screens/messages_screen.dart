@@ -1,10 +1,8 @@
-
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vistacall/data/models/conversation.dart';
 import 'package:vistacall/bloc/messages/messages_bloc.dart';
+import 'package:vistacall/bloc/messages/messages_event.dart';
+import 'package:vistacall/bloc/messages/messages_state.dart';
 import 'package:vistacall/utils/constants.dart';
 
 class MessagesScreen extends StatelessWidget {

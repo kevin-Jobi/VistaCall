@@ -1,37 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:vistacall/bloc/appointments/appointments_event.dart';
+import 'package:vistacall/bloc/appointments/appointments_state.dart';
 import 'package:vistacall/data/models/appointment.dart';
-
-abstract class AppointmentsEvent {}
-
-class LoadAppointmentsEvent extends AppointmentsEvent {}
-
-class ToggleAppointmentsEvent extends AppointmentsEvent {
-  final bool showUpcoming;
-
-  ToggleAppointmentsEvent(this.showUpcoming);
-}
-
-abstract class AppointmentsState {}
-
-class AppointmentsLoadingState extends AppointmentsState {}
-
-class AppointmentsLoadedState extends AppointmentsState {
-  final List<Appointment> upcomingAppointments;
-  final List<Appointment> pastAppointments;
-  final bool showUpcoming;
-
-  AppointmentsLoadedState({
-    required this.upcomingAppointments,
-    required this.pastAppointments,
-    required this.showUpcoming,
-  });
-}
-
-class AppointmentsErrorState extends AppointmentsState {
-  final String error;
-
-  AppointmentsErrorState(this.error);
-}
 
 class AppointmentsBloc extends Bloc<AppointmentsEvent, AppointmentsState> {
   AppointmentsBloc() : super(AppointmentsLoadingState()) {
@@ -74,11 +44,13 @@ class AppointmentsBloc extends Bloc<AppointmentsEvent, AppointmentsState> {
           ),
         ];
 
-        emit(AppointmentsLoadedState(
-          upcomingAppointments: upcomingAppointments,
-          pastAppointments: pastAppointments,
-          showUpcoming: true,
-        ));
+        emit(
+          AppointmentsLoadedState(
+            upcomingAppointments: upcomingAppointments,
+            pastAppointments: pastAppointments,
+            showUpcoming: true,
+          ),
+        );
       } catch (e) {
         emit(AppointmentsErrorState('Failed to load appointments: $e'));
       }
@@ -87,11 +59,13 @@ class AppointmentsBloc extends Bloc<AppointmentsEvent, AppointmentsState> {
     on<ToggleAppointmentsEvent>((event, emit) async {
       if (state is AppointmentsLoadedState) {
         final currentState = state as AppointmentsLoadedState;
-        emit(AppointmentsLoadedState(
-          upcomingAppointments: currentState.upcomingAppointments,
-          pastAppointments: currentState.pastAppointments,
-          showUpcoming: event.showUpcoming,
-        ));
+        emit(
+          AppointmentsLoadedState(
+            upcomingAppointments: currentState.upcomingAppointments,
+            pastAppointments: currentState.pastAppointments,
+            showUpcoming: event.showUpcoming,
+          ),
+        );
       }
     });
   }

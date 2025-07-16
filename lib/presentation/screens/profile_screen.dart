@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vistacall/bloc/profile/profile_state.dart';
 import 'package:vistacall/utils/constants.dart';
 import 'package:vistacall/bloc/profile/profile_bloc.dart';
 import 'package:vistacall/viewmodels/profile_viewmodel.dart';

@@ -1,14 +1,6 @@
 import 'package:bloc/bloc.dart';
-
-abstract class WelcomeEvent {}
-
-class NavigateToAuthEvent extends WelcomeEvent {}
-
-abstract class WelcomeState {}
-
-class WelcomeInitialState extends WelcomeState {}
-
-class WelcomeNavigateState extends WelcomeState {}
+import 'package:vistacall/bloc/welcome/welcome_event.dart';
+import 'package:vistacall/bloc/welcome/welcome_state.dart';
 
 class WelcomeBloc extends Bloc<WelcomeEvent, WelcomeState> {
   WelcomeBloc() : super(WelcomeInitialState()) {
