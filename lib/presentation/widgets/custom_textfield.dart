@@ -12,7 +12,8 @@ class CustomTextField extends StatelessWidget {
   final VoidCallback? onVisibilityToggle;
   final bool showVisibilityToggle;
   final bool isPasswordVisible;
-
+  final String? Function(String?)? validator;
+  final bool isRequired;
   const CustomTextField({
     super.key,
     this.controller,
@@ -25,16 +26,24 @@ class CustomTextField extends StatelessWidget {
     this.showVisibilityToggle = false,
     this.isPasswordVisible = false,
     this.onVisibilityToggle,
+    this.validator,
+    this.isRequired = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: padding,
-      child: TextField(
+      child: TextFormField(
         controller: controller,
         obscureText: obscureText,
         keyboardType: keyboardType,
+        validator: validator ?? (isRequired ? (value){
+          if(value == null || value.isEmpty){
+            return 'This field is required';
+          }
+          return null;
+        }:null),
         decoration: InputDecoration(
           labelText: labelText,
           hintText: hintText,
@@ -49,6 +58,7 @@ class CustomTextField extends StatelessWidget {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
           filled: true,
           fillColor: AppConstants.greyBackground,
+          errorMaxLines: 2
         ),
       ),
     );
