@@ -1,0 +1,170 @@
+{
+  "project_info": {
+    "project_number": "114152481636",
+    "project_id": "vistacall-83230",
+    "storage_bucket": "vistacall-83230.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:114152481636:android:d7d60b03d0d3d766a6d071",
+        "android_client_info": {
+          "package_name": "com.example.vista_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "114152481636-k1v6jhcefgpsjj8q8s5inm6j9o54o9up.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsRXoy0lW27eX1jO_g8q72qIfYe8rkGCg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "114152481636-k1v6jhcefgpsjj8q8s5inm6j9o54o9up.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "114152481636-5u6fekvie2cebqre5e0t9cet2al2sdq7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.vistacall"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:114152481636:android:a7c7873e8ca37f07a6d071",
+        "android_client_info": {
+          "package_name": "com.example.vista_call_doctor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "114152481636-fde84jlj71mrp3qdcb6ojfqhq9606n3p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vista_call_doctor",
+            "certificate_hash": "73f857fab8bf204c9be1a16e65ead2cad490055e"
+          }
+        },
+        {
+          "client_id": "114152481636-k1v6jhcefgpsjj8q8s5inm6j9o54o9up.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsRXoy0lW27eX1jO_g8q72qIfYe8rkGCg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "114152481636-k1v6jhcefgpsjj8q8s5inm6j9o54o9up.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "114152481636-5u6fekvie2cebqre5e0t9cet2al2sdq7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.vistacall"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:114152481636:android:faa39073ee299bada6d071",
+        "android_client_info": {
+          "package_name": "com.example.vistacall"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "114152481636-1etrhmnds66pnlbdll8rrqo7stfs9i01.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vistacall",
+            "certificate_hash": "73f857fab8bf204c9be1a16e65ead2cad490055e"
+          }
+        },
+        {
+          "client_id": "114152481636-k1v6jhcefgpsjj8q8s5inm6j9o54o9up.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsRXoy0lW27eX1jO_g8q72qIfYe8rkGCg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "114152481636-k1v6jhcefgpsjj8q8s5inm6j9o54o9up.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "114152481636-5u6fekvie2cebqre5e0t9cet2al2sdq7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.vistacall"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:114152481636:android:5a7467695d412c28a6d071",
+        "android_client_info": {
+          "package_name": "com.example.vistatalk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "114152481636-k1v6jhcefgpsjj8q8s5inm6j9o54o9up.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsRXoy0lW27eX1jO_g8q72qIfYe8rkGCg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "114152481636-k1v6jhcefgpsjj8q8s5inm6j9o54o9up.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "114152481636-5u6fekvie2cebqre5e0t9cet2al2sdq7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.vistacall"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
