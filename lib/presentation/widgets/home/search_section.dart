@@ -5,14 +5,15 @@ import 'package:vistacall/presentation/widgets/custom_textfield.dart';
 import 'package:vistacall/utils/constants.dart';
 
 class SearchSection extends StatelessWidget {
-  const SearchSection({super.key});
+  final Function(String)? onSearchChanged;
+  const SearchSection({super.key, required this.onSearchChanged});
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'FIND YOUR DOCTOR',
           style: TextStyle(
             fontSize: 22,
@@ -20,10 +21,11 @@ class SearchSection extends StatelessWidget {
             color: AppConstants.primaryColor,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         CustomTextField(
           hintText: 'Search doctors, specialties...',
           prefixIcon: Icons.search,
+          onChanged: onSearchChanged,
         ),
       ],
     );

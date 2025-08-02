@@ -25,7 +25,10 @@ import 'package:vistacall/presentation/views/welcome.dart';
 import 'package:vistacall/presentation/views/wrapper.dart';
 import 'package:vistacall/utils/constants.dart';
 import 'package:vistacall/viewmodels/auth_viewmodel.dart';
+import 'package:vistacall/viewmodels/home_viewmodel.dart';
 import 'package:vistacall/viewmodels/password_visibility_bloc.dart';
+import 'package:provider/provider.dart';
+
 
 
 void main() async {
@@ -57,47 +60,50 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (context) => DoctorListBloc(firestore:FirebaseFirestore.instance )),
         BlocProvider(create: (context) => PasswordVisibilityBloc()),
       ],
-      child: MaterialApp(
-        navigatorKey: NavigationService.navigatorKey,
-
-        // onGenerateRoute: RouteGenerator.generateRoute,
-        debugShowCheckedModeBanner: false,
-        title: 'Vistacall',
-        theme: ThemeData(
-          primaryColor: AppConstants.primaryColor,
-          scaffoldBackgroundColor: AppConstants.backgroundColor,
-          textTheme: const TextTheme(
-            bodyMedium: TextStyle(color: Colors.black54),
-          ),
-          elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppConstants.primaryColor,
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
+      child: ChangeNotifierProvider(
+        create: (BuildContext context) => HomeViewModel(BlocProvider.of<HomeBloc>(context)),
+        child: MaterialApp(
+          navigatorKey: NavigationService.navigatorKey,
+        
+          // onGenerateRoute: RouteGenerator.generateRoute,
+          debugShowCheckedModeBanner: false,
+          title: 'Vistacall',
+          theme: ThemeData(
+            primaryColor: AppConstants.primaryColor,
+            scaffoldBackgroundColor: AppConstants.backgroundColor,
+            textTheme: const TextTheme(
+              bodyMedium: TextStyle(color: Colors.black54),
+            ),
+            elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppConstants.primaryColor,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
               ),
             ),
           ),
-        ),
-        initialRoute: AppConstants.splashRoute,
-        routes: {
-          AppConstants.appWrapperRoute: (context) => const AppWrapper(),
-
-          AppConstants.splashRoute: (context) => const Splashscreen(),
-          AppConstants.welcomeRoute: (context) => const WelcomeScreen(),
-          AppConstants.authRoute: (context) => const AuthScreen(),
-          AppConstants.homeRoute: (context) => const Home(),
-          AppConstants.profileRoute: (context) => const ProfileScreen(),
-          AppConstants.appointmentsRoute:
-              (context) => const AppointmentsScreen(),
-          AppConstants.messagesRoute: (context) => const MessagesScreen(),
-          AppConstants.chatRoute: (context) => const ChatScreen(),
-          AppConstants.doctorsRoute: (context) {
-            final department =
-                ModalRoute.of(context)!.settings.arguments as String;
-            return DoctorListScreen(department: department);
+          initialRoute: AppConstants.splashRoute,
+          routes: {
+            AppConstants.appWrapperRoute: (context) => const AppWrapper(),
+        
+            AppConstants.splashRoute: (context) => const Splashscreen(),
+            AppConstants.welcomeRoute: (context) => const WelcomeScreen(),
+            AppConstants.authRoute: (context) => const AuthScreen(),
+            AppConstants.homeRoute: (context) => const Home(),
+            AppConstants.profileRoute: (context) => const ProfileScreen(),
+            AppConstants.appointmentsRoute:
+                (context) => const AppointmentsScreen(),
+            AppConstants.messagesRoute: (context) => const MessagesScreen(),
+            AppConstants.chatRoute: (context) => const ChatScreen(),
+            AppConstants.doctorsRoute: (context) {
+              final department =
+                  ModalRoute.of(context)!.settings.arguments as String;
+              return DoctorListScreen(department: department);
+            },
           },
-        },
+        ),
       ),
     );
   }

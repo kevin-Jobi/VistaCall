@@ -27,6 +27,10 @@ class DoctorModel {
 
   factory DoctorModel.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
+    print('Parsing doctor: ${data['personal']['fullName']}'); // Debug log
+    final personalData = data['personal'] as Map<String, dynamic>? ?? {};
+    final fullName = personalData['fullName'];
+    print('Extracted fullName: $fullName'); // Log extracted name
     return DoctorModel(
       personal: data['personal'] as Map<String, dynamic>,
       availability: data['availability'] as Map<String, dynamic>,

@@ -14,6 +14,7 @@ class CustomTextField extends StatelessWidget {
   final bool isPasswordVisible;
   final String? Function(String?)? validator;
   final bool isRequired;
+  final ValueChanged<String>? onChanged;
   const CustomTextField({
     super.key,
     this.controller,
@@ -28,6 +29,7 @@ class CustomTextField extends StatelessWidget {
     this.onVisibilityToggle,
     this.validator,
     this.isRequired = false,
+    this.onChanged
   });
 
   @override
@@ -44,6 +46,7 @@ class CustomTextField extends StatelessWidget {
           }
           return null;
         }:null),
+        onChanged: onChanged,
         decoration: InputDecoration(
           labelText: labelText,
           hintText: hintText,
