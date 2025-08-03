@@ -41,7 +41,8 @@ class Home extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: BlocBuilder<HomeBloc, HomeState>(
-              buildWhen: (previous, current) => current is HomeLoading || current is HomeLoaded,
+              buildWhen: (previous, current) =>
+                  current is HomeLoading || current is HomeLoaded,
               builder: (context, state) {
                 if (viewModel.isLoading(state)) {
                   return const Center(child: CircularProgressIndicator());
@@ -57,9 +58,10 @@ class Home extends StatelessWidget {
                   viewModel.setSearchQuery(query);
                 }
 
-                final categoriesToShow = viewModel.getFilteredCategories().isNotEmpty
-                      ?viewModel.getFilteredCategories()
-                      : viewModel.getDoctorCategories(state);
+                final categoriesToShow =
+                    viewModel.getFilteredCategories().isNotEmpty
+                        ? viewModel.getFilteredCategories()
+                        : viewModel.getDoctorCategories(state);
 
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

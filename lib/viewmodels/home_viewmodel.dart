@@ -41,10 +41,13 @@ class HomeViewModel extends ChangeNotifier {
         _filteredCategories = []; // Reset categories to empty
         _filteredDoctors = []; // Reset doctors to empty
       } else {
+        //filtered departments
         _filteredCategories = state.doctorCategories
             .where((category) =>
                 category.title.toLowerCase().contains(_searchQuery))
             .toList();
+
+        // filtered doctors
         _filteredDoctors = state.doctors.where((doctor) {
           final fullName = doctor.personal['fullName']?.toLowerCase() ?? '';
           final department = doctor.personal['department']?.toLowerCase() ?? '';

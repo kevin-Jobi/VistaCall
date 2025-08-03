@@ -29,6 +29,11 @@ class ProfileOptionsList extends StatelessWidget {
           title: 'Privacy And Policy',
           onTap: () => _showComingSoon(context, 'Privacy And Policy page'),
         ),
+          _buildOptionItem(
+          icon: Icons.favorite,
+          title: 'Favorite',
+          onTap: () => _showComingSoon(context, 'Favorite page'),
+        ),
         _buildOptionItem(
           icon: Icons.description,
           title: 'Terms And Conditions',

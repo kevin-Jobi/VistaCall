@@ -1,15 +1,3 @@
-// class Doctor {
-//   final String name;
-//   final String specialty;
-//   final String department;
-
-//   Doctor({
-//     required this.name,
-//     required this.specialty,
-//     required this.department,
-//   });
-// }
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DoctorModel {
