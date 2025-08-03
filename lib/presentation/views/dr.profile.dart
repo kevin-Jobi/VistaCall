@@ -10,13 +10,21 @@ class Drprofile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppConstants.secondaryColor,
+        backgroundColor: const Color.fromARGB(255, 199, 228, 240),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              DrCard(doctor: doctor),
-              Drdetails(doctor: doctor,)
+              DrCard(
+                doctor: doctor,
+              ),
+              Drdetails(
+                doctor: doctor,
+              ),
+              const Text('Working Days'),
+              Text('${doctor.availability['availableDays']}'),
+              const Text('Consultation Fee'),
+              Text('${doctor.availability['fees']}'),
             ],
           ),
         ));
