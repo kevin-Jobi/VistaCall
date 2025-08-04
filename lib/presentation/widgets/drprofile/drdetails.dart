@@ -14,16 +14,19 @@ class Drdetails extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           children: [
             const GridItem(
-              title: 'Hospital Work',
+              title: 'Hospital',
               icon: Icon(Icons.local_hospital),
+              subtitle: 'Work',
             ),
             GridItem(
               title: '${doctor.availability['yearsOfExperience']} Years',
               icon: const Icon(Icons.medical_information),
+              subtitle: 'Experience',
             ),
             const GridItem(
               title: 'Verified',
               icon: Icon(Icons.verified),
+              subtitle: 'Profile',
             ),
           ],
         )
@@ -34,15 +37,16 @@ class Drdetails extends StatelessWidget {
 
 class GridItem extends StatelessWidget {
   final String title;
+  final String subtitle;
   final Icon icon;
-  const GridItem({super.key, required this.title, required this.icon});
+  const GridItem({super.key, required this.title, required this.icon,required this.subtitle});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         CircleAvatar(
-          backgroundColor: Colors.orange[100],
+          backgroundColor: const Color.fromARGB(255, 111, 190, 243),
           radius: 30,
           child: icon
         ),
@@ -52,8 +56,9 @@ class GridItem extends StatelessWidget {
         Text(
           title,
           textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 12),
-        )
+          style: const TextStyle(fontSize: 17,fontWeight:FontWeight.bold),
+        ),
+        Text(subtitle)
       ],
     );
   }
