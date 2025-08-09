@@ -5,3 +5,10 @@ class FetchDoctorsByDepartment extends DoctorListEvent {
 
   FetchDoctorsByDepartment(this.department);
 }
+
+class FilteredDoctorsByPrice extends DoctorListEvent {
+  final String priceRange;
+
+  FilteredDoctorsByPrice(this.priceRange);
+}
+

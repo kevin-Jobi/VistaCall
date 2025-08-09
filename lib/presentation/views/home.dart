@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vistacall/bloc/doctor_list/doctor_list_bloc.dart';
 import 'package:vistacall/bloc/home/home_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:vistacall/presentation/widgets/custom_bottom_navbar.dart';
@@ -19,18 +20,24 @@ class Home extends StatelessWidget {
     // final homeBloc = BlocProvider.of<HomeBloc>(context);
     // final viewModel = HomeViewModel(homeBloc)..loadData();
 
-    return Consumer<HomeViewModel>(
-      builder: (context, viewModel, child) {
-        return Scaffold(
-          appBar: const HomeAppBar(),
-          body: _buildBody(context, viewModel),
-          floatingActionButton: _buildFloatingActionButton(context),
-          bottomNavigationBar: CustomBottomNavBar(
-            currentIndex: 0,
-            onTap: (index) => _handleNavigation(index, context),
-          ),
-        );
-      },
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: BlocProvider.of<HomeBloc>(context)),
+        BlocProvider.value(value: BlocProvider.of<DoctorListBloc>(context))
+      ],
+      child: Consumer<HomeViewModel>(
+        builder: (context, viewModel, child) {
+          return Scaffold(
+            appBar: const HomeAppBar(),
+            body: _buildBody(context, viewModel),
+            floatingActionButton: _buildFloatingActionButton(context),
+            bottomNavigationBar: CustomBottomNavBar(
+              currentIndex: 0,
+              onTap: (index) => _handleNavigation(index, context),
+            ),
+          );
+        },
+      ),
     );
   }
 

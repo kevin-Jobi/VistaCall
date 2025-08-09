@@ -1,4 +1,3 @@
-// lib/presentation/widgets/appointments/appointments_list.dart
 
 import 'package:flutter/material.dart';
 import 'package:vistacall/bloc/appointments/appointments_state.dart';

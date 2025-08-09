@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vistacall/presentation/widgets/drprofile/dr_card.dart';
 import 'package:vistacall/presentation/widgets/drprofile/drdetails.dart';
-import 'package:vistacall/utils/constants.dart';
 
 class Drprofile extends StatelessWidget {
   final dynamic doctor;
@@ -9,13 +8,20 @@ class Drprofile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isFavourite = true;
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 215, 240, 250),
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 215, 240, 250),
-          title: Text(
-            'Dr.${doctor.personal['fullName'] as String}',
-            style: const TextStyle(fontWeight: FontWeight.bold),
+          title: Row(
+            children: [
+              Text(
+                'Dr.${doctor.personal['fullName'] as String}',
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(width: 140,),
+              IconButton(onPressed: (){}, icon:Icon( isFavourite? Icons.favorite : Icons.favorite_border))
+            ],
           ),
         ),
         body: Padding(

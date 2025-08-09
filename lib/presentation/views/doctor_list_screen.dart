@@ -42,56 +42,84 @@ class DoctorListScreen extends StatelessWidget {
             }
             // return doctors.isEmpty
             //     ? const Center(child: Text('No doctors found for this department')):
-            return ListView.builder(
-              padding: const EdgeInsets.all(16),
-              itemCount: doctors.length,
-              itemBuilder: (context, index) {
-                final doctor = doctors[index];
-                final fullName =
-                    doctor.personal?['fullName']?.toString() ?? 'Unknown'; //
-                final experience =//
-                    doctor.availability?['yearsOfExperience']?.toString() ??//
-                        'N/A';//
-                final fees = doctor.availability?['fees']?.toString() ?? 'N/A';//
-                final imageUrl = doctor.personal?['profileImageUrl']?.toString();//
+            return Stack(children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 30),
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(16),
+                  itemCount: doctors.length,
+                  itemBuilder: (context, index) {
+                    final doctor = doctors[index];
+                    final fullName = doctor.personal?['fullName']?.toString() ??
+                        'Unknown'; //
+                    final experience = //
+                        doctor.availability?['yearsOfExperience']
+                                ?.toString() ?? //
+                            'N/A'; //
+                    final fees =
+                        doctor.availability?['fees']?.toString() ?? 'N/A'; //
+                    final imageUrl =
+                        doctor.personal?['profileImageUrl']?.toString(); //
 
-                return Card(
-                  elevation: 2,
-                  margin: const EdgeInsets.only(bottom: 16),
-                  child: ListTile(
+                    return Card(
+                      elevation: 2,
+                      margin: const EdgeInsets.only(bottom: 16),
+                      child: ListTile(
                         leading: CircleAvatar(
-                      backgroundColor: Colors.grey,
-                      backgroundImage: imageUrl != null 
-                          ? NetworkImage(imageUrl) 
-                          : null,
-                      child: imageUrl == null 
-                          ? const Icon(Icons.person, color: Colors.white)
-                          : null,
-                    ),
-                    title: Text(
-                      doctor.personal['fullName'] as String,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: Text(
-                        'Experience: ${doctor.availability['yearsOfExperience']} years | Fees: ${doctor.availability['fees'] ?? 'N/A'}'),
-                    trailing: ElevatedButton(
-                      onPressed: () {
-                        // ScaffoldMessenger.of(context).showSnackBar(
-                        //   SnackBar(content: Text('Booking appointment with ${doctor.}...')),
-                        // );
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Drprofile(
-                                      doctor: doctor,
-                                    )));
-                      },
-                      child: const Text('Book'),
-                    ),
-                  ),
-                );
-              },
-            );
+                          backgroundColor: Colors.grey,
+                          backgroundImage:
+                              imageUrl != null ? NetworkImage(imageUrl) : null,
+                          child: imageUrl == null
+                              ? const Icon(Icons.person, color: Colors.white)
+                              : null,
+                        ),
+                        title: Text(
+                          doctor.personal['fullName'] as String,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text(
+                            'Experience: ${doctor.availability['yearsOfExperience']} years | Fees: ${doctor.availability['fees'] ?? 'N/A'}'),
+                        trailing: ElevatedButton(
+                          onPressed: () {
+                            // ScaffoldMessenger.of(context).showSnackBar(
+                            //   SnackBar(content: Text('Booking appointment with ${doctor.}...')),
+                            // );
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Drprofile(
+                                          doctor: doctor,
+                                        )));
+                          },
+                          child: const Text('Book'),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Positioned(
+                  top: 1,
+                  right: 10,
+                  child: PopupMenuButton(
+                      icon: const Icon(Icons.sort),
+                      itemBuilder: (BuildContext context) {
+                        return [
+                          const PopupMenuItem(
+                              value: 'experience: Low to High',
+                              child: Text('experience: Low to High')),
+                          const PopupMenuItem(
+                              value: 'experience: High to Low',
+                              child: Text('experience: High to Low')),
+                          const PopupMenuItem(
+                              value: 'Price: Low to High',
+                              child: Text('Price: Low to High')),
+                          const PopupMenuItem(
+                              value: 'Price: High to Low',
+                              child: Text('Price: High to Low')),
+                        ];
+                      }))
+            ]);
           }
           return const SizedBox.shrink();
         },

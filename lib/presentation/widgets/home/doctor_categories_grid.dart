@@ -1,4 +1,3 @@
-// lib/presentation/widgets/home/doctor_categories_grid.dart
 
 import 'package:flutter/material.dart';
 import 'package:vistacall/data/models/doctor_category.dart';
