@@ -3,23 +3,30 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vistacall/bloc/doctor_list/doctor_list_bloc.dart';
 import 'package:vistacall/bloc/doctor_list/doctor_list_event.dart';
 import 'package:vistacall/bloc/doctor_list/doctor_list_state.dart';
-import 'package:vistacall/presentation/views/dr.profile.dart';
 import 'package:vistacall/utils/constants.dart';
 
-class DoctorListScreen extends StatelessWidget {
+class DoctorListScreen extends StatefulWidget {
   final String department;
 
   const DoctorListScreen({super.key, required this.department});
 
   @override
-  Widget build(BuildContext context) {
-    final doctorListBloc = BlocProvider.of<DoctorListBloc>(context);
-    doctorListBloc.add(FetchDoctorsByDepartment(department));
+  State<DoctorListScreen> createState() => _DoctorListScreenState();
+}
 
+class _DoctorListScreenState extends State<DoctorListScreen> {
+  @override
+  void initState() {
+    super.initState();
+    final doctorListBloc = BlocProvider.of<DoctorListBloc>(context);
+    doctorListBloc.add(FetchDoctorsByDepartment(widget.department));
+  }
+
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppConstants.primaryColor,
-        title: Text('$department Doctor'),
+        title: Text('${widget.department} Doctor'),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(20),
@@ -84,12 +91,11 @@ class DoctorListScreen extends StatelessWidget {
                             // ScaffoldMessenger.of(context).showSnackBar(
                             //   SnackBar(content: Text('Booking appointment with ${doctor.}...')),
                             // );
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Drprofile(
-                                          doctor: doctor,
-                                        )));
+                            Navigator.pushNamed(context, '/drprofile',
+                                arguments: {
+                                  'doctor': doctor,
+                                  'doctorId': doctor.id,
+                                });
                           },
                           child: const Text('Book'),
                         ),

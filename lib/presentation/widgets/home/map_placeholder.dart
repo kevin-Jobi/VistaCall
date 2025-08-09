@@ -1,5 +1,3 @@
-// lib/presentation/widgets/home/map_placeholder.dart
-
 import 'package:flutter/material.dart';
 
 class MapPlaceholder extends StatelessWidget {

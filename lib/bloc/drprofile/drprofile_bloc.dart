@@ -7,9 +7,6 @@ part 'drprofile_event.dart';
 
 class DrprofileBloc extends Bloc<DrprofileEvent, DrprofileState> {
   DrprofileBloc() : super(DrProfileLoadingState()) {
-    on<DrprofileEvent>((event, emit) {
-    });
-
-    
+    on<DrprofileEvent>((event, emit) {});
   }
 }

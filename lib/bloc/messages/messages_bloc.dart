@@ -1,5 +1,3 @@
-
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vistacall/bloc/messages/messages_event.dart';
 import 'package:vistacall/bloc/messages/messages_state.dart';

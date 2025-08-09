@@ -1,5 +1,3 @@
-// lib/presentation/widgets/home/upcoming_appointments.dart
-
 import 'package:flutter/material.dart';
 import 'package:vistacall/data/models/appointment.dart';
 

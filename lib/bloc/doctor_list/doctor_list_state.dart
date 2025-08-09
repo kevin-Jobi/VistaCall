@@ -1,6 +1,3 @@
-
-
-
 import 'package:vistacall/data/models/doctor.dart';
 
 abstract class DoctorListState {}

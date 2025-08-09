@@ -1,4 +1,3 @@
-// lib/presentation/widgets/auth/auth_image_header.dart
 
 import 'package:flutter/material.dart';
 

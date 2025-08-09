@@ -1,5 +1,3 @@
-// lib/presentation/widgets/chat/chat_app_bar.dart
-
 import 'package:flutter/material.dart';
 import 'package:vistacall/utils/constants.dart';
 

@@ -6,8 +6,6 @@ import 'package:vistacall/bloc/chat/chat_state.dart';
 import 'package:vistacall/presentation/widgets/chat/chat_app_bar.dart';
 import 'package:vistacall/presentation/widgets/chat/message_input.dart';
 import 'package:vistacall/presentation/widgets/chat/message_list.dart';
-import 'package:vistacall/utils/constants.dart';
-import 'package:vistacall/viewmodels/auth_viewmodel.dart';
 import 'package:vistacall/viewmodels/chat_viewmodel.dart';
 
 class ChatScreen extends StatelessWidget {

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:vistacall/data/models/message.dart';
 import 'package:vistacall/utils/constants.dart';

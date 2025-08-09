@@ -72,7 +72,7 @@ class AuthService {
       await _auth.signOut();
       print('Firebase Auth sign-out completed.');
 
-      // We rely on splash_bloc.dart to verify auth state on app restart
+      //  Rely on splash_bloc.dart to verify auth state on app restart
       return true;
     } catch (e) {
       print('Logout failed with error: $e');

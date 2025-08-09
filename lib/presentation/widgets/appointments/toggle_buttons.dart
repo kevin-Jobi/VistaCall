@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:vistacall/bloc/appointments/appointments_state.dart';
 import 'package:vistacall/utils/constants.dart';

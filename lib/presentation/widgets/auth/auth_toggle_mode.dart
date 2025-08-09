@@ -1,5 +1,3 @@
-// lib/presentation/widgets/auth/auth_toggle_mode.dart
-
 import 'package:flutter/material.dart';
 
 class AuthenticationToggleMode extends StatelessWidget {

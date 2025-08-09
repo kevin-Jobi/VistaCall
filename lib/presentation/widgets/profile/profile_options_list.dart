@@ -1,5 +1,3 @@
-// lib/presentation/widgets/profile/profile_options_list.dart
-
 import 'package:flutter/material.dart';
 
 class ProfileOptionsList extends StatelessWidget {
@@ -29,7 +27,7 @@ class ProfileOptionsList extends StatelessWidget {
           title: 'Privacy And Policy',
           onTap: () => _showComingSoon(context, 'Privacy And Policy page'),
         ),
-          _buildOptionItem(
+        _buildOptionItem(
           icon: Icons.favorite,
           title: 'Favorite',
           onTap: () => _showComingSoon(context, 'Favorite page'),

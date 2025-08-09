@@ -1,4 +1,3 @@
-// lib/presentation/widgets/chat/message_input.dart
 
 import 'package:flutter/material.dart';
 import 'package:vistacall/utils/constants.dart';

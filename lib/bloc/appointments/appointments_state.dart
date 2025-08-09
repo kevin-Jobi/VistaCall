@@ -1,5 +1,3 @@
-
-
 import 'package:vistacall/data/models/appointment.dart';
 
 abstract class AppointmentsState {}

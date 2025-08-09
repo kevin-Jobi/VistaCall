@@ -1,9 +1,5 @@
 part of 'home_bloc.dart';
 
-// import 'package:flutter/material.dart';
-// import '../models/doctor_category.dart';
-// import '../models/appointment.dart';
-
 @immutable
 abstract class HomeState {}
 

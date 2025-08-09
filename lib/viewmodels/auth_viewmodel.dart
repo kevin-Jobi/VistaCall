@@ -1,5 +1,3 @@
-
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -80,35 +78,23 @@ class AuthViewModel {
     }
   }
 
-  /// Logout
-  // Future<void> logout() async {
-  //   try {
-  //     await Future.wait([
-  //       _auth.signOut(),
-  //       _googleSignIn.signOut(),
-  //       _googleSignIn.disconnect(),
-  //     ]);
-  //   } catch (e) {
-  //     throw AuthException('Logout failed', e.toString());
-  //   }
-  // }
-
-Future<void> logout() async {
-  try {
-    await Future.wait([
-      _auth.signOut(),
-      _googleSignIn.signOut(),
-      _googleSignIn.disconnect(),
-    ]);
-  } catch (e, stackTrace) {
-    print('Logout error: $e\n$stackTrace');
-    throw AuthException('Logout failed', e.toString());
+  Future<void> logout() async {
+    try {
+      await Future.wait([
+        _auth.signOut(),
+        _googleSignIn.signOut(),
+        _googleSignIn.disconnect(),
+      ]);
+    } catch (e, stackTrace) {
+      print('Logout error: $e\n$stackTrace');
+      throw AuthException('Logout failed', e.toString());
+    }
   }
-}
+
   /// Helper to handle Firebase auth exceptions
   AuthException _handleFirebaseAuthException(FirebaseAuthException e) {
     String message;
-    
+
     switch (e.code) {
       case 'invalid-email':
         message = 'Please enter a valid email address';
@@ -131,7 +117,7 @@ Future<void> logout() async {
       default:
         message = 'Authentication failed: ${e.message}';
     }
-    
+
     return AuthException(message, e.code);
   }
 }

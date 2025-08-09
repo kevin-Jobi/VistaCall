@@ -1,5 +1,3 @@
-// lib/presentation/widgets/messages/conversation_list.dart
-
 import 'package:flutter/material.dart';
 import 'package:vistacall/data/models/conversation.dart';
 import 'package:vistacall/utils/constants.dart';
@@ -35,7 +33,8 @@ class ConversationList extends StatelessWidget {
     );
   }
 
-  Widget _buildConversationTile(Conversation conversation, BuildContext context) {
+  Widget _buildConversationTile(
+      Conversation conversation, BuildContext context) {
     return ListTile(
       leading: const CircleAvatar(
         backgroundColor: Colors.grey,
