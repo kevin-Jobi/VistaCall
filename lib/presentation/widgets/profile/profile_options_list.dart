@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vistacall/presentation/views/favorite_doctors.dart';
 
 class ProfileOptionsList extends StatelessWidget {
   final VoidCallback onLogout;
@@ -28,10 +29,15 @@ class ProfileOptionsList extends StatelessWidget {
           onTap: () => _showComingSoon(context, 'Privacy And Policy page'),
         ),
         _buildOptionItem(
-          icon: Icons.favorite,
-          title: 'Favorite',
-          onTap: () => _showComingSoon(context, 'Favorite page'),
-        ),
+            icon: Icons.favorite,
+            title: 'Favorite',
+            // onTap: () => _showComingSoon(context, 'Favorite page'),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const FavoriteDoctors()));
+            }),
         _buildOptionItem(
           icon: Icons.description,
           title: 'Terms And Conditions',

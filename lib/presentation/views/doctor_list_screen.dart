@@ -88,9 +88,6 @@ class _DoctorListScreenState extends State<DoctorListScreen> {
                             'Experience: ${doctor.availability['yearsOfExperience']} years | Fees: ${doctor.availability['fees'] ?? 'N/A'}'),
                         trailing: ElevatedButton(
                           onPressed: () {
-                            // ScaffoldMessenger.of(context).showSnackBar(
-                            //   SnackBar(content: Text('Booking appointment with ${doctor.}...')),
-                            // );
                             Navigator.pushNamed(context, '/drprofile',
                                 arguments: {
                                   'doctor': doctor,

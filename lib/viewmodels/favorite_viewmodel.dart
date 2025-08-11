@@ -25,19 +25,23 @@ class FavoriteViewModel extends ChangeNotifier {
         return;
       }
 
-      final userDoc = await _firestore.collection('users').doc(user.uid).get();
-      if (userDoc.exists) {
+      final userRef = _firestore.collection('users').doc(user.uid);
+      final userDoc = await userRef.get();
+
+      if (!userDoc.exists) {
+        // Create the user document with an empty favorites list
+        await userRef.set({
+          'favoriteDoctors': [],
+          'createAt': FieldValue.serverTimestamp(),
+        });
+
+        _isFavorite = false;
+        _error = null;
+      } else {
         final favorites =
             userDoc.data()?['favoriteDoctors'] as List<dynamic>? ?? [];
-        // final id = doctorId ?? doctor.personal['id'] as String? ?? '';
-        // if (id.isEmpty) {
-        //   _error = 'Doctor ID not found';
-        //   notifyListeners();
-        //   return;
-        // }
         _isFavorite = favorites.contains(doctorId);
-      } else {
-        _error = 'User document not found';
+        _error = null;
       }
       notifyListeners();
     } catch (e) {
