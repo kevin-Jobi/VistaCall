@@ -1,13 +1,8 @@
-// part of 'favorite_bloc.dart';
+import 'package:equatable/equatable.dart';
 
-// sealed class FavoriteEvent extends Equatable {
-//   const FavoriteEvent();
+abstract class FavoriteDoctorsEvent extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
 
-//   @override
-//   List<Object> get props => [];
-// }
-
-
-abstract class FavoriteDoctorsEvent {}
-
-class LoadFavoriteDoctors extends FavoriteDoctorsEvent{}
+class LoadFavoriteDoctors extends FavoriteDoctorsEvent {}
