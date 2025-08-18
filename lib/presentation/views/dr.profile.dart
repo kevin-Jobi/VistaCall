@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vistacall/data/models/doctor.dart';
+import 'package:vistacall/presentation/views/book_appointment.dart';
 import 'package:vistacall/presentation/widgets/drprofile/dr_card.dart';
 import 'package:vistacall/presentation/widgets/drprofile/drdetails.dart';
 import 'package:vistacall/viewmodels/favorite_viewmodel.dart';
@@ -23,7 +24,7 @@ class Drprofile extends StatelessWidget {
                   'Dr.${doctor.personal['fullName'] as String? ?? 'Unknown'}',
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(width: 140),
+                const SizedBox(width: 130),
                 IconButton(
                   onPressed: favoriteViewModel.error == null
                       ? () => favoriteViewModel.toggleFavorite(doctor,
@@ -84,6 +85,10 @@ class Drprofile extends StatelessWidget {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => BookAppointment(doctor: doctor,)));
                         print('Button Pressed!');
                       },
                       child: const Text('Book Appointment'),

@@ -41,8 +41,8 @@ class FavoriteDoctors extends StatelessWidget {
                     child: ListTile(
                       leading: CircleAvatar(
                         backgroundColor: Colors.grey,
-                        backgroundImage: doctor.personal['imageUrl'] != null
-                            ? NetworkImage(doctor.personal['imageUrl'])
+                        backgroundImage: doctor.personal['profileImageUrl'] != null
+                            ? NetworkImage(doctor.personal['profileImageUrl'])
                             : const AssetImage('assets/images/dentist.png')
                                 as ImageProvider,
                       ),
