@@ -20,9 +20,11 @@ class Drprofile extends StatelessWidget {
             backgroundColor: const Color.fromARGB(255, 215, 240, 250),
             title: Row(
               children: [
-                Text(
-                  'Dr.${doctor.personal['fullName'] as String? ?? 'Unknown'}',
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                Expanded(
+                  child: Text(
+                    'Dr.${doctor.personal['fullName'] as String? ?? 'Unknown'}',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
                 const SizedBox(width: 130),
                 IconButton(
@@ -65,8 +67,10 @@ class Drprofile extends StatelessWidget {
                             fontSize: 19, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 10),
+                      // Text(
+                      //     '${doctor.availability['availableDays'] ?? 'Not available'}'),
                       Text(
-                          '${doctor.availability['availableDays'] ?? 'Not available'}'),
+                          _safeCastToStringList(doctor.availability['availableDays']).join(', ') ?? 'Not available'),
                       const SizedBox(height: 20),
                       const Text(
                         'Consultation Fee',
@@ -88,7 +92,9 @@ class Drprofile extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => BookAppointment(doctor: doctor,)));
+                                builder: (context) => BookAppointment(
+                                      doctor: doctor,
+                                    )));
                         print('Button Pressed!');
                       },
                       child: const Text('Book Appointment'),
@@ -101,6 +107,13 @@ class Drprofile extends StatelessWidget {
         );
       },
     );
+  }
+
+  List<String> _safeCastToStringList(dynamic value) {
+    if (value is List) {
+      return value.map((e) => e.toString()).toList();
+    }
+    return [];
   }
 }
 
