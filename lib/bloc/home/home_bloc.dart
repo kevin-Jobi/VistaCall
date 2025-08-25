@@ -49,7 +49,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       // final doctorListBloc = DoctorListBloc(firestore: FirebaseFirestore.instance);
       doctorListBloc.add(FetchDoctorsByDepartment('all'));
       final List<Appointment> appointments = [
-        Appointment(
+        Appointment(patientName: 'patientname',
           doctorName: 'Donald Mathew',
           specialty: 'Cardiology Consultation',
           date: 'May 2, 2025',
