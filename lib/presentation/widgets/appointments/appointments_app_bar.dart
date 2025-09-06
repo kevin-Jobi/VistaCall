@@ -9,7 +9,7 @@ class AppointmentsAppBar extends StatelessWidget implements PreferredSizeWidget 
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: AppConstants.primaryColor,
-      title: const Text('Appointments'),
+      title: const Text('Appointment'),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(20),

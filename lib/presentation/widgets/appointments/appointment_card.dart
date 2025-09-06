@@ -28,7 +28,7 @@ class AppointmentCard extends StatelessWidget {
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         subtitle: Text(
-          '${appointment.specialty}\n${appointment.date} - ${appointment.time}',
+          '${appointment.specialty}\n${appointment.date}  ${appointment.time}',
         ),
         trailing: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
