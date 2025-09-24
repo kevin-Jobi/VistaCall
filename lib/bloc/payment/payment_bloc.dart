@@ -69,7 +69,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
         final newBookingRef = bookingsRef.doc();
         transaction.set(newBookingRef, {
           'userId': user.uid,
-          'userName': user.displayName ?? 'Kevin Jobi',
+          'userName': user.displayName ?? 'Anuraj',
           'date': dateStr,
           'slot': event.selectedSlot,
           'paymentMethod': event.paymentMethod,
