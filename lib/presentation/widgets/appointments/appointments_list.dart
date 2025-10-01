@@ -17,19 +17,116 @@ class AppointmentsList extends StatelessWidget {
   Widget build(BuildContext context) {
     final appointments = viewModel.getFilteredAppointments(state);
 
-    return Expanded(
-      child: appointments.isEmpty
-          ? const Center(child: Text('No appointments found'))
-          : ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemCount: appointments.length,
-              itemBuilder: (context, index) {
-                return AppointmentCard(
-                  appointment: appointments[index],
-                  viewModel: viewModel,
-                );
-              },
+    return appointments.isEmpty
+        ? _buildEmptyState(context)
+        : ListView.builder(
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.fromLTRB(20, 16, 20, 100),
+            itemCount: appointments.length,
+            itemBuilder: (context, index) {
+              return TweenAnimationBuilder<double>(
+                duration: Duration(milliseconds: 300 + (index * 100)),
+                tween: Tween(begin: 0, end: 1),
+                builder: (context, value, child) {
+                  return Transform.translate(
+                    offset: Offset(0, 30 * (1 - value)),
+                    child: Opacity(
+                      opacity: value,
+                      child: AppointmentCard(
+                        appointment: appointments[index],
+                        viewModel: viewModel,
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+          );
+  }
+
+  Widget _buildEmptyState(BuildContext context) {
+    final isUpcoming = state.showUpcoming;
+
+    return Center(
+      child: Container(
+        margin: const EdgeInsets.all(32),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 120,
+              height: 120,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade100,
+                borderRadius: BorderRadius.circular(60),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 20,
+                    offset: const Offset(0, 10),
+                  ),
+                ],
+              ),
+              child: Icon(
+                isUpcoming ? Icons.calendar_month : Icons.history,
+                size: 50,
+                color: Colors.grey.shade400,
+              ),
             ),
+            const SizedBox(height: 24),
+            Text(
+              isUpcoming ? 'No Upcoming Appointments' : 'No Past Appointments',
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+                color: Colors.black87,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                isUpcoming
+                    ? 'When you schedule appointments, they\'ll appear here'
+                    : 'Your completed appointments will show up here',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey.shade600,
+                  height: 1.4,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            if (isUpcoming) ...[
+              const SizedBox(height: 32),
+              ElevatedButton.icon(
+                onPressed: () {
+                  // Navigate to booking screen
+                },
+                icon: const Icon(Icons.add, size: 18),
+                label: const Text(
+                  'Book Appointment',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue.shade600,
+                  foregroundColor: Colors.white,
+                  elevation: 0,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
     );
   }
 }

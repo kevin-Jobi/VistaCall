@@ -56,17 +56,19 @@ class ConfirmBooking extends PaymentEvent {
   final DateTime selectedDate;
   final String selectedSlot;
   final String paymentMethod;
+  final String? userName; // Added to pass the selected patient name
 
   const ConfirmBooking({
     required this.doctor,
     required this.selectedDate,
     required this.selectedSlot,
     required this.paymentMethod,
+    this.userName,
   });
 
   @override
   List<Object?> get props =>
-      [doctor, selectedDate, selectedSlot, paymentMethod];
+      [doctor, selectedDate, selectedSlot, paymentMethod, userName];
 }
 
 class PaymentConfirmed extends PaymentEvent {

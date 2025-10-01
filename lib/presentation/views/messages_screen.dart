@@ -6,7 +6,6 @@ import 'package:vistacall/bloc/messages/messages_state.dart';
 import 'package:vistacall/presentation/widgets/custom_bottom_navbar.dart';
 import 'package:vistacall/presentation/widgets/messages/conversation_list.dart';
 import 'package:vistacall/presentation/widgets/messages/messages_app_bar.dart';
-import 'package:vistacall/utils/constants.dart';
 import 'package:vistacall/viewmodels/messages_viewmodel.dart';
 
 class MessagesScreen extends StatelessWidget {
@@ -15,15 +14,13 @@ class MessagesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final messagesBloc = BlocProvider.of<MessagesBloc>(context);
-    messagesBloc.add(LoadMessagesEvent());
+    messagesBloc.add(LoadMessagesEvent()); // Trigger loading once
 
-    final viewModel = MessagesViewModel(messagesBloc)..loadMessages();
+    final viewModel = MessagesViewModel(messagesBloc);
 
     return Scaffold(
-      appBar: MessagesAppBar(),
-
+      appBar: const MessagesAppBar(),
       body: _buildBody(context, viewModel),
-
       bottomNavigationBar: CustomBottomNavBar(
         currentIndex: 2,
         onTap: (index) => viewModel.handleNavigation(index, context),
@@ -34,6 +31,8 @@ class MessagesScreen extends StatelessWidget {
   Widget _buildBody(BuildContext context, MessagesViewModel viewModel) {
     return BlocBuilder<MessagesBloc, MessagesState>(
       builder: (context, state) {
+        print(
+            'MessagesScreen: State - ${state.runtimeType}, Conversations: ${viewModel.getConversations(state).length}');
         if (viewModel.isLoading(state)) {
           return const Center(child: CircularProgressIndicator());
         }
@@ -43,11 +42,18 @@ class MessagesScreen extends StatelessWidget {
         }
 
         final conversations = viewModel.getConversations(state);
+        if (conversations.isEmpty) {
+          return const Center(child: Text('No conversations available'));
+        }
+
         return ConversationList(
           conversations: conversations,
-          onConversationTap:
-              (conversation) =>
-                  viewModel.handleConversationTap(context, conversation),
+          onConversationTap: (conversation) {
+            print(
+                'Tapped conversation - DoctorID: ${conversation.doctorId}, DoctorName: ${conversation.doctorName}');
+
+            viewModel.handleConversationTap(context, conversation);
+          },
         );
       },
     );

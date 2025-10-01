@@ -45,6 +45,21 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
         '${event.selectedDate.year}-${event.selectedDate.month.toString().padLeft(2, '0')}-${event.selectedDate.day.toString().padLeft(2, '0')}';
     final slotId = '${dateStr}_${event.selectedSlot}'; // Unique ID for slot
 
+    final userId = user.uid;
+    final patientsRef =
+        db.collection('users').doc(userId).collection('patients');
+    final patientSnapshot = await patientsRef.get();
+    if (patientSnapshot.docs.isEmpty) {
+      await patientsRef.add({
+        'firstName': event.userName?.split(' ').first ?? 'New',
+        'lastName': event.userName?.split(' ').last ?? 'User',
+        'createdAt': FieldValue.serverTimestamp(),
+        'gendder': 'Unknown',
+        'age': 0,
+        'relation': 'Self',
+      });
+    }
+
     try {
       await db.runTransaction((transaction) async {
         final slotDocRef = slotsRef.doc(slotId);
@@ -65,11 +80,13 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
             },
             SetOptions(merge: true));
 
-        // Create booking
+        // Create booking with selected patient name
         final newBookingRef = bookingsRef.doc();
         transaction.set(newBookingRef, {
           'userId': user.uid,
-          'userName': user.displayName ?? 'Anuraj',
+          'userName': event.userName ??
+              user.displayName ??
+              'Anuraj', // Use selected name or fallback
           'date': dateStr,
           'slot': event.selectedSlot,
           'paymentMethod': event.paymentMethod,

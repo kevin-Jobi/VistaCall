@@ -36,9 +36,11 @@ class ConversationList extends StatelessWidget {
   Widget _buildConversationTile(
       Conversation conversation, BuildContext context) {
     return ListTile(
-      leading: const CircleAvatar(
+      leading: CircleAvatar(
         backgroundColor: Colors.grey,
-        child: Icon(Icons.person, color: Colors.white),
+        child: Text(conversation.doctorName.isNotEmpty
+            ? conversation.doctorName[0]
+            : '?'),
       ),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -63,7 +65,7 @@ class ConversationList extends StatelessWidget {
               margin: const EdgeInsets.only(right: 8),
               width: 8,
               height: 8,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 color: AppConstants.primaryColor,
               ),

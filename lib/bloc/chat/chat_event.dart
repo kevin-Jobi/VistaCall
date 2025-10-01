@@ -1,9 +1,14 @@
-abstract class ChatEvent {}
+// abstract class ChatEvent {}
 
-class LoadChatEvent extends ChatEvent {}
+// class LoadChatMessages extends ChatEvent {
+//   final String doctorId;
+//   LoadChatMessages(this.doctorId);
+// }
 
-class SendMessageEvent extends ChatEvent {
-  final String message;
+// class SendChatMessage extends ChatEvent {
+//   final String doctorId;
+//   final String message;
+//   SendChatMessage({required this.doctorId, required this.message});
+// }
 
-  SendMessageEvent(this.message);
-}
+

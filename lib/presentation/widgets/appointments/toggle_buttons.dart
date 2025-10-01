@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:vistacall/bloc/appointments/appointments_state.dart';
 import 'package:vistacall/utils/constants.dart';
@@ -15,53 +17,102 @@ class ToggleButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _buildToggleButton(
-            text: 'Upcoming',
-            isSelected: state.showUpcoming,
-            onTap: () => viewModel.toggleAppointmentsView(true),
-          ),
-          _buildToggleButton(
-            text: 'Past',
-            isSelected: !state.showUpcoming,
-            onTap: () => viewModel.toggleAppointmentsView(false),
+    return Container(
+      margin: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade100,
+        borderRadius: BorderRadius.circular(30),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
           ),
         ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(4),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _buildToggleButton(
+              context: context,
+              text: 'Upcoming',
+              icon: Icons.schedule,
+              isSelected: state.showUpcoming,
+              onTap: () => viewModel.toggleAppointmentsView(true),
+            ),
+            _buildToggleButton(
+              context: context,
+              text: 'Past',
+              icon: Icons.history,
+              isSelected: !state.showUpcoming,
+              onTap: () => viewModel.toggleAppointmentsView(false),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildToggleButton({
+    required BuildContext context,
     required String text,
+    required IconData icon,
     required bool isSelected,
     required VoidCallback onTap,
   }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 120,
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        decoration: BoxDecoration(
-          color: isSelected ? AppConstants.primaryColor : Colors.grey.shade200,
-          borderRadius: BorderRadius.horizontal(
-            left: text == 'Upcoming' ? const Radius.circular(20) : Radius.zero,
-            right: text == 'Past' ? const Radius.circular(20) : Radius.zero,
-          ),
-        ),
-        child: Center(
-          child: Text(
-            text,
-            style: TextStyle(
-              color: isSelected ? Colors.white : Colors.black54,
-              fontWeight: FontWeight.w600,
+    return TweenAnimationBuilder<double>(
+      duration: const Duration(milliseconds: 200),
+      tween: Tween(begin: 0, end: isSelected ? 1 : 0),
+      builder: (context, value, child) {
+        return GestureDetector(
+          onTap: onTap,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            curve: Curves.easeInOut,
+            width: 140,
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            decoration: BoxDecoration(
+              color: isSelected ? AppConstants.primaryColor : Colors.transparent,
+              borderRadius: BorderRadius.circular(26),
+              boxShadow: isSelected
+                  ? [
+                      BoxShadow(
+                        color: AppConstants.primaryColor.withOpacity(0.3),
+                        blurRadius: 8,
+                        offset: const Offset(0, 4),
+                      ),
+                    ]
+                  : [],
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AnimatedScale(
+                  scale: isSelected ? 1.0 : 0.9,
+                  duration: const Duration(milliseconds: 200),
+                  child: Icon(
+                    icon,
+                    size: 18,
+                    color: isSelected ? Colors.white : Colors.grey.shade600,
+                  ),
+                ),
+                const SizedBox(width: 6),
+                AnimatedDefaultTextStyle(
+                  duration: const Duration(milliseconds: 200),
+                  style: TextStyle(
+                    color: isSelected ? Colors.white : Colors.grey.shade700,
+                    fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
+                    fontSize: 14,
+                  ),
+                  child: Text(text),
+                ),
+              ],
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

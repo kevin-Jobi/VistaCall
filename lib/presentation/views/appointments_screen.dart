@@ -7,7 +7,6 @@ import 'package:vistacall/presentation/widgets/appointments/appointments_list.da
 import 'package:vistacall/presentation/widgets/appointments/toggle_buttons.dart';
 import 'package:vistacall/presentation/widgets/custom_bottom_navbar.dart';
 import 'package:vistacall/utils/constants.dart';
-
 import 'package:vistacall/viewmodels/appointments_viewmodel.dart';
 
 class AppointmentsScreen extends StatelessWidget {
@@ -20,25 +19,125 @@ class AppointmentsScreen extends StatelessWidget {
     )..loadAppointments();
 
     return Scaffold(
+      backgroundColor: Colors.grey.shade50,
       appBar: const AppointmentsAppBar(),
       body: StreamBuilder<AppointmentsState>(
         stream: viewModel.appointmentsState,
         builder: (context, snapshot) {
           final state = snapshot.data;
+
           if (state == null || state is AppointmentsLoadingState) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (state is AppointmentsErrorState) {
-            return Center(child: Text(state.error));
-          }
-          if (state is AppointmentsLoadedState) {
-            return Column(
-              children: [
-                ToggleButtons(viewModel: viewModel, state: state),
-                AppointmentsList(viewModel: viewModel, state: state),
-              ],
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.05),
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: const CircularProgressIndicator(
+                      strokeWidth: 3,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Loading appointments...',
+                    style: TextStyle(
+                      color: Colors.grey.shade600,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
             );
           }
+
+          if (state is AppointmentsErrorState) {
+            return Center(
+              child: Container(
+                margin: const EdgeInsets.all(24),
+                padding: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  color: Colors.red.shade50,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: Colors.red.shade100),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.error_outline,
+                      color: Colors.red.shade400,
+                      size: 48,
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Something went wrong',
+                      style: TextStyle(
+                        color: Colors.red.shade700,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      state.error,
+                      style: TextStyle(
+                        color: Colors.red.shade600,
+                        fontSize: 14,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+
+          if (state is AppointmentsLoadedState) {
+            return Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.white,
+                    Colors.grey.shade50,
+                  ],
+                ),
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0x0F000000),
+                          blurRadius: 4,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: ToggleButtons(viewModel: viewModel, state: state),
+                  ),
+                  Expanded(
+                    child: AppointmentsList(viewModel: viewModel, state: state),
+                  ),
+                ],
+              ),
+            );
+          }
+
           return const SizedBox.shrink();
         },
       ),
