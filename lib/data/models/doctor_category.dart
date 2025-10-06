@@ -15,10 +15,12 @@ class DoctorCategory {
   // Static method to map category titles to image paths
   static String _getImagePathForCategory(String title) {
     switch (title.toLowerCase()) {
-      case 'womens specialist':
+      // case 'womens specialist':
+      case 'gynaecologist':
         return 'assets/images/women_specialist.png';
 
-      case 'child specialist':
+      // case 'child specialist':
+      case 'pediatrician':
         return 'assets/images/pediatrician.png';
       case 'neurologist':
         return 'assets/images/neuro.png';
