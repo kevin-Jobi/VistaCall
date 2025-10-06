@@ -77,7 +77,9 @@ class Home extends StatelessWidget {
                       onSearchChanged: onSearchChanged,
                     ),
                     const SizedBox(height: 20),
-                    _buildSectionTitle('Find Doctors for your Health Problem'),
+                    // _buildSectionTitle('Find Doctors for your Health Problem'),
+                    const SizedBox(height: 20),
+
                     DoctorCategoriesGrid(
                       categories: categoriesToShow,
                       onCategoryTap: (category) =>
@@ -106,14 +108,14 @@ class Home extends StatelessWidget {
                         },
                       )
                     ],
-                    const SizedBox(height: 20),
-                    _buildSectionTitle('General Health Facility Near you'),
-                    const MapPlaceholder(),
-                    const SizedBox(height: 20),
-                    _buildSectionTitle('Your Upcoming Appointments'),
-                    UpcomingAppointments(
-                      appointments: viewModel.getAppointments(state),
-                    ),
+                    // const SizedBox(height: 20),
+                    // _buildSectionTitle('General Health Facility Near you'),
+                    // const MapPlaceholder(),
+                    // const SizedBox(height: 20),
+                    // _buildSectionTitle('Your Upcoming Appointments'),
+                    // UpcomingAppointments(
+                    //   appointments: viewModel.getAppointments(state),
+                    // ),
                   ],
                 );
               },

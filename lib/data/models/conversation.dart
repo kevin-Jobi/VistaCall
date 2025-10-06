@@ -1,7 +1,7 @@
 class Conversation {
   final String doctorName;
   final String lastMessage;
-  final String timestamp;
+  final DateTime timestamp;
   final bool isUnread;
   final String doctorId; // Added field
   final String chatId;

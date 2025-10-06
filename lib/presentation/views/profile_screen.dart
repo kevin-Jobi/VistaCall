@@ -41,14 +41,14 @@ class ProfileScreen extends StatelessWidget {
               return Column(
                 children: [
                   _buildModernHeader(),
-                  const SizedBox(height: 20),
+                  // const SizedBox(height: 10),
                   ProfileHeader(
                     name: viewModel.getName(state),
                     email: viewModel.getEmail(state),
                     photoUrl: viewModel.getPhotoUrl(state),
                     onEdit: () => viewModel.editProfile(context),
                   ),
-                  const SizedBox(height: 20),
+                  // const SizedBox(height: 10),
                   Expanded(
                     child: Container(
                       decoration: const BoxDecoration(
@@ -89,7 +89,7 @@ class ProfileScreen extends StatelessWidget {
 
   Widget _buildModernHeader() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       child: Row(
         children: [
           Container(

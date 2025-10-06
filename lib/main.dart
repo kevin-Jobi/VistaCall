@@ -137,7 +137,6 @@
 //   }
 // }
 
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -182,41 +181,6 @@ void main() async {
       .activate(androidProvider: AndroidProvider.debug);
   runApp(const MainApp());
 }
-
-
-
-// Future<void> main() async {
-//   // Initialize Firebase (add firebase_core dependency if needed)
-//   await Firebase.initializeApp(); // Add this if running locally
-//   final db = FirebaseFirestore.instance;
-//   final snapshot = await db.collection('chats').get();
-//   for (var doc in snapshot.docs) {
-//     final chatId = doc.id;
-//     final parts = chatId.split('-');
-//     if (parts.length == 2) {
-//       final patientName = parts[0];
-//       final doctorId = parts[1];
-//       // Assume patientName is the name, find UID from users
-//       final userQuery = await db.collection('users').where('name', isEqualTo: patientName).limit(1).get();
-//       if (userQuery.docs.isNotEmpty) {
-//         final patientId = userQuery.docs.first.id;
-//         final newChatId = patientId.compareTo(doctorId) < 0 ? '$patientId-$doctorId' : '$doctorId-$patientId';
-//         if (newChatId != chatId) {
-//           await db.collection('chats').doc(newChatId).set(doc.data(), SetOptions(merge: true));
-//           final messages = await db.collection('chats').doc(chatId).collection('messages').get();
-//           for (var msg in messages.docs) {
-//             await db.collection('chats').doc(newChatId).collection('messages').doc(msg.id).set(msg.data());
-//           }
-//           await db.collection('chats').doc(chatId).delete();
-//           print('Migrated $chatId to $newChatId');
-//         }
-//       } else {
-//         print('No user found for patientName: $patientName, skipping $chatId');
-//       }
-//     }
-//   }
-//   print('Migration completed');
-// }
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
@@ -289,8 +253,10 @@ class MainApp extends StatelessWidget {
                 const AppointmentsScreen(),
             AppConstants.messagesRoute: (context) => const MessagesScreen(),
             AppConstants.chatRoute: (context) => const ChatScreen(),
-            AppConstants.chatDetailRoute: (context) { // New route for ChatDetailScreen
-              final args = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+            AppConstants.chatDetailRoute: (context) {
+              // New route for ChatDetailScreen
+              final args = ModalRoute.of(context)!.settings.arguments
+                  as Map<String, String>;
               return ChatDetailScreen(
                 doctorId: args['doctorId']!,
                 doctorName: args['doctorName']!,
