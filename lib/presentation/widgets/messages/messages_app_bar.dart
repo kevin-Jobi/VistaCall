@@ -8,7 +8,16 @@ class MessagesAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: AppConstants.primaryColor,
-      title: const Text('Messages'),
+      title: const Text(
+        'Messages',
+        style: TextStyle(
+          fontWeight: FontWeight.w800,
+          fontSize: 22,
+          color: Colors.white,
+          letterSpacing: 0.5,
+          height: 1.2,
+        ),
+      ),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(20),

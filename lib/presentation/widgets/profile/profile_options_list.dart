@@ -1,8 +1,8 @@
-
-
-
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:vistacall/presentation/views/favorite_doctors.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:vistacall/presentation/widgets/profile/privecy_and_policy.dart';
 
 class ProfileOptionsList extends StatelessWidget {
   final VoidCallback onLogout;
@@ -11,7 +11,7 @@ class ProfileOptionsList extends StatelessWidget {
     super.key,
     required this.onLogout,
   });
-
+  // https://meet.google.com/wes-kvau-xwr
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -28,7 +28,17 @@ class ProfileOptionsList extends StatelessWidget {
                 title: 'Invite Friends',
                 subtitle: 'Share with your network',
                 color: Colors.blue.shade600,
-                onTap: () => _showComingSoon(context, 'Invite Friends feature'),
+                onTap: () async {
+                  const String appLink =
+                      'https://play.google.com/store/apps/details?id=com.yourcompany.vistacall';
+                  const String message =
+                      'Hey! 👋 Check out VistaCall — a smart way to connect with doctors online. Download it here:\n$appLink';
+
+                  await Share.share(
+                    message,
+                    subject: 'Try VistaCall App!',
+                  );
+                },
               ),
               _OptionData(
                 icon: Icons.favorite_outline,
@@ -45,18 +55,43 @@ class ProfileOptionsList extends StatelessWidget {
                   );
                 },
               ),
+              // _OptionData(
+              //   icon: Icons.feedback_outlined,
+              //   title: 'Feedback',
+              //   subtitle: 'Help us improve',
+              //   color: Colors.orange.shade600,
+              //   onTap: () => _showComingSoon(context, 'Feedback feature'),
+              // ),
               _OptionData(
                 icon: Icons.feedback_outlined,
                 title: 'Feedback',
                 subtitle: 'Help us improve',
                 color: Colors.orange.shade600,
-                onTap: () => _showComingSoon(context, 'Feedback feature'),
+                onTap: () async {
+                  final Uri emailUri = Uri(
+                    scheme: 'mailto',
+                    path: 'kevinemmanu@gmail.com', // ← Replace with your email
+                    queryParameters: {
+                      'subject': 'Feedback for VistaCall App',
+                    },
+                  );
+
+                  if (await canLaunchUrl(emailUri)) {
+                    await launchUrl(emailUri);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Could not open email app.'),
+                      ),
+                    );
+                  }
+                },
               ),
             ],
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           // Legal & Privacy Group
           _buildOptionsGroup(
             context,
@@ -67,23 +102,20 @@ class ProfileOptionsList extends StatelessWidget {
                 title: 'Privacy Policy',
                 subtitle: 'How we protect your data',
                 color: Colors.green.shade600,
-                onTap: () => _showComingSoon(context, 'Privacy Policy page'),
-              ),
-              _OptionData(
-                icon: Icons.description_outlined,
-                title: 'Terms & Conditions',
-                subtitle: 'Usage agreements',
-                color: Colors.indigo.shade600,
-                onTap: () => _showComingSoon(context, 'Terms & Conditions page'),
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PrivacyPolicyPage(),
+                    )),
               ),
             ],
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           // Logout Section
           _buildLogoutOption(context),
-          
+
           const SizedBox(height: 32),
         ],
       ),
@@ -128,7 +160,7 @@ class ProfileOptionsList extends StatelessWidget {
               final option = entry.value;
               final isFirst = index == 0;
               final isLast = index == options.length - 1;
-              
+
               return _buildOptionItem(
                 context: context,
                 option: option,
@@ -317,7 +349,68 @@ class ProfileOptionsList extends StatelessWidget {
     );
   }
 
-  // void _showLogoutDialog(BuildContext context) {
+  void _showComingSoon(BuildContext context, String feature) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: const Icon(
+                Icons.info_outline,
+                color: Colors.white,
+                size: 16,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                '$feature coming soon!',
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 15,
+                ),
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: Colors.blue.shade600,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        margin: const EdgeInsets.all(16),
+        duration: const Duration(seconds: 2),
+        elevation: 6,
+      ),
+    );
+  }
+}
+
+class _OptionData {
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final Color color;
+  final VoidCallback onTap;
+  final bool hasNavigation;
+
+  _OptionData({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.color,
+    required this.onTap,
+    this.hasNavigation = false,
+  });
+}
+
+
+// void _showLogoutDialog(BuildContext context) {
   //   showDialog(
   //     context: context,
   //     builder: (context) => AlertDialog(
@@ -390,63 +483,3 @@ class ProfileOptionsList extends StatelessWidget {
   //     ),
   //   );
   // }
-
-  void _showComingSoon(BuildContext context, String feature) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(4),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(6),
-              ),
-              child: const Icon(
-                Icons.info_outline,
-                color: Colors.white,
-                size: 16,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Text(
-                '$feature coming soon!',
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 15,
-                ),
-              ),
-            ),
-          ],
-        ),
-        backgroundColor: Colors.blue.shade600,
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        margin: const EdgeInsets.all(16),
-        duration: const Duration(seconds: 2),
-        elevation: 6,
-      ),
-    );
-  }
-}
-
-class _OptionData {
-  final IconData icon;
-  final String title;
-  final String subtitle;
-  final Color color;
-  final VoidCallback onTap;
-  final bool hasNavigation;
-
-  _OptionData({
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-    required this.color,
-    required this.onTap,
-    this.hasNavigation = false,
-  });
-}

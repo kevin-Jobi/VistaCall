@@ -152,11 +152,13 @@ import 'package:vistacall/bloc/messages/messages_bloc.dart';
 import 'package:vistacall/bloc/profile/profile_bloc.dart';
 import 'package:vistacall/bloc/splash/splash_bloc.dart';
 import 'package:vistacall/bloc/welcome/welcome_bloc.dart';
+import 'package:vistacall/data/models/appointment.dart';
 import 'package:vistacall/data/models/doctor.dart';
 import 'package:vistacall/data/services/navigation_service.dart';
 import 'package:vistacall/firebase_options.dart';
 import 'package:vistacall/presentation/views/appointments_screen.dart';
 import 'package:vistacall/presentation/views/auth_screen.dart';
+import 'package:vistacall/presentation/views/booking_successpage.dart';
 import 'package:vistacall/presentation/views/chat_screen.dart';
 import 'package:vistacall/presentation/views/doctor_list_screen.dart';
 import 'package:vistacall/presentation/views/dr.profile.dart';
@@ -166,6 +168,7 @@ import 'package:vistacall/presentation/views/profile_screen.dart';
 import 'package:vistacall/presentation/views/splashscreen.dart';
 import 'package:vistacall/presentation/views/welcome.dart';
 import 'package:vistacall/presentation/views/wrapper.dart';
+import 'package:vistacall/presentation/widgets/bookappointments/booking_details.dart';
 import 'package:vistacall/presentation/widgets/chat/chatDetailScreen.dart';
 import 'package:vistacall/utils/constants.dart';
 import 'package:vistacall/viewmodels/auth_viewmodel.dart';
@@ -279,7 +282,11 @@ class MainApp extends StatelessWidget {
                 create: (_) => FavoriteViewModel(doctor, doctorId: doctorId),
                 child: Drprofile(doctor: doctor),
               );
-            }
+            },
+            '/booking-details': (context) {
+              final appointment = ModalRoute.of(context)!.settings.arguments as Appointment;
+              return BookingDetailsPage(appointment: appointment);
+            },
           },
         ),
       ),

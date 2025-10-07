@@ -4130,7 +4130,7 @@ class BookingConformation extends StatelessWidget {
                       const Flexible(
                         flex: 2,
                         child: Text(
-                          'Confirm Clinic Visit',
+                          'confirm clinic visit',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 17,

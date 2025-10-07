@@ -6,6 +6,8 @@ class Appointment {
   final String time;
   final String status;
   final String patientName;
+  final String? paymentMethod;
+  final String? paymentStatus;
 
   Appointment({
     this.id,
@@ -14,6 +16,8 @@ class Appointment {
     required this.date,
     required this.time,
     required this.status,
-    required this.patientName
+    required this.patientName,
+    this.paymentMethod,
+    this.paymentStatus,
   });
 }

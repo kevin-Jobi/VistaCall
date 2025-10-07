@@ -401,32 +401,32 @@ class ProfileHeader extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 6),
-        // Container(
-        //   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-        //   decoration: BoxDecoration(
-        //     color: const Color(0xFFE8F5E9),
-        //     borderRadius: BorderRadius.circular(12),
-        //   ),
-        //   child: Row(
-        //     mainAxisSize: MainAxisSize.min,
-        //     children: [
-        //       const Icon(
-        //         Icons.verified,
-        //         color: Color(0xFF4CAF50),
-        //         size: 14,
-        //       ),
-        //       const SizedBox(width: 4),
-        //       const Text(
-        //         'Verified Doctor',
-        //         style: TextStyle(
-        //           color: Color(0xFF4CAF50),
-        //           fontWeight: FontWeight.w500,
-        //           fontSize: 11,
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+          decoration: BoxDecoration(
+            color: const Color(0xFFE8F5E9),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: const Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.verified,
+                color: Color(0xFF4CAF50),
+                size: 14,
+              ),
+              SizedBox(width: 4),
+              Text(
+                'Verified Profile',
+                style: TextStyle(
+                  color: Color(0xFF4CAF50),
+                  fontWeight: FontWeight.w500,
+                  fontSize: 11,
+                ),
+              ),
+            ],
+          ),
+        ),
         const SizedBox(height: 10),
         Row(
           children: [

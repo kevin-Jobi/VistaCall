@@ -1,148 +1,27 @@
-// import 'package:flutter/material.dart';
-// import 'package:intl/intl.dart';
-// import 'package:vistacall/data/models/doctor.dart';
-
-// class BookingSuccessPage extends StatelessWidget {
-//   final DoctorModel doctor;
-//   final DateTime selectedDate;
-//   final String selectedSlot;
-//   final String paymentMethod;
-
-//   const BookingSuccessPage({
-//     super.key,
-//     required this.doctor,
-//     required this.selectedDate,
-//     required this.selectedSlot,
-//     required this.paymentMethod,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final dateStr = '${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}';
-//     final paymentStatus = paymentMethod == 'Pay Online' ? 'Completed' : 'Pending';
-
-//     return Scaffold(
-//       backgroundColor: const Color(0xFFF8FAFC),
-//       appBar: AppBar(
-//         backgroundColor: Colors.white,
-//         elevation: 0,
-//         title: const Text(
-//           'Booking Confirmed',
-//           style: TextStyle(
-//             fontSize: 20,
-//             fontWeight: FontWeight.w600,
-//             color: Colors.black87,
-//           ),
-//         ),
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(20),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             const Icon(
-//               Icons.check_circle_outline,
-//               color: Colors.green,
-//               size: 80,
-//             ),
-//             const SizedBox(height: 20),
-//             Text(
-//               'Appointment with Dr. ${doctor.personal['fullName']}',
-//               style: const TextStyle(
-//                 fontSize: 24,
-//                 fontWeight: FontWeight.w700,
-//                 color: Colors.black87,
-//               ),
-//             ),
-//             const SizedBox(height: 10),
-//             Text(
-//               '${_formatDate(dateStr)}, $selectedSlot',
-//               style: TextStyle(
-//                 fontSize: 18,
-//                 color: Colors.grey.shade600,
-//               ),
-//             ),
-//             const SizedBox(height: 20),
-//             Card(
-//               elevation: 2,
-//               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-//               child: Padding(
-//                 padding: const EdgeInsets.all(16),
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: [
-//                     Text('Payment Method: $paymentMethod', style: const TextStyle(fontSize: 16)),
-//                     const SizedBox(height: 8),
-//                     Text('Payment Status: $paymentStatus', style: const TextStyle(fontSize: 16)),
-//                     const SizedBox(height: 8),
-//                     Text('Doctor Specialty: ${doctor.personal['department']}', style: const TextStyle(fontSize: 16)),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//             const Spacer(),
-//             SizedBox(
-//               width: double.infinity,
-//               child: ElevatedButton(
-//                 onPressed: () => Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false),
-//                 style: ElevatedButton.styleFrom(
-//                   backgroundColor: const Color(0xFF2196F3),
-//                   padding: const EdgeInsets.symmetric(vertical: 16),
-//                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-//                 ),
-//                 child: const Text(
-//                   'Go to Home',
-//                   style: TextStyle(fontSize: 18, color: Colors.white),
-//                 ),
-//               ),
-//             ),
-//             const SizedBox(height: 20),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-//   String _formatDate(String dateStr) {
-//   try {
-//     final date = DateTime.parse(dateStr);
-//     return DateFormat('dd-MM-yyyy').format(date);
-//   } catch (_) {
-//     return dateStr;
-//   }
-// }
-// }
-
-
-
-
+// booking_success_page.dart
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:vistacall/data/models/doctor.dart';
+import 'package:vistacall/data/models/appointment.dart';
 import 'package:vistacall/utils/constants.dart';
 
-class BookingSuccessPage extends StatefulWidget {
-  final DoctorModel doctor;
-  final DateTime selectedDate;
-  final String selectedSlot;
-  final String paymentMethod;
+class BookingDetailsPage extends StatefulWidget {
+  final Appointment appointment;
 
-  const BookingSuccessPage({
+  const BookingDetailsPage({
     super.key,
-    required this.doctor,
-    required this.selectedDate,
-    required this.selectedSlot,
-    required this.paymentMethod,
+    required this.appointment,
   });
 
   @override
-  State<BookingSuccessPage> createState() => _BookingSuccessPageState();
+  State<BookingDetailsPage> createState() => _BookingDetailsPageState();
 }
 
-class _BookingSuccessPageState extends State<BookingSuccessPage>
+class _BookingDetailsPageState extends State<BookingDetailsPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
   late Animation<double> _fadeAnimation;
+  // String? _paymentMethod;
 
   @override
   void initState() {
@@ -163,6 +42,7 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
     );
 
     _controller.forward();
+    // _fetchPaymentMethod();
   }
 
   @override
@@ -173,10 +53,7 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
 
   @override
   Widget build(BuildContext context) {
-    final dateStr =
-        '${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, '0')}-${widget.selectedDate.day.toString().padLeft(2, '0')}';
-    final paymentStatus =
-        widget.paymentMethod == 'Pay Online' ? 'Completed' : 'Pending';
+    final dateStr = _formatDate(widget.appointment.date);
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FA),
@@ -195,10 +72,8 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
                     const SizedBox(height: 24),
                     _buildAppointmentCard(dateStr),
                     const SizedBox(height: 16),
-                    _buildDetailsCard(paymentStatus),
-                    const SizedBox(height: 24),
-                    _buildActionButtons(context),
-                    const SizedBox(height: 20),
+                    _buildDetailsCard(),
+                    const SizedBox(height: 24), // No action buttons
                   ],
                 ),
               ),
@@ -237,7 +112,7 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
           ),
           const SizedBox(width: 12),
           const Text(
-            'Booking Confirmed',
+            'Booking Details',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w700,
@@ -274,7 +149,6 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
         ),
         child: Stack(
           children: [
-            // Shine effect
             Positioned(
               top: 20,
               right: 20,
@@ -311,7 +185,7 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
       child: Column(
         children: [
           const Text(
-            'Booking Successful!',
+            'Booking Details',
             style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.w800,
@@ -322,7 +196,7 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
           ),
           const SizedBox(height: 12),
           Text(
-            'Your appointment has been confirmed',
+            'View the details of your appointment',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w500,
@@ -379,7 +253,7 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Dr. ${widget.doctor.personal['fullName']}',
+                      'Dr. ${widget.appointment.doctorName}',
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
@@ -389,7 +263,7 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      widget.doctor.personal['department'] ?? 'General',
+                      widget.appointment.specialty,
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -418,7 +292,7 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
                   child: _buildInfoItem(
                     Icons.calendar_today_rounded,
                     'Date',
-                    _formatDate(dateStr),
+                    dateStr,
                   ),
                 ),
                 Container(
@@ -430,7 +304,7 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
                   child: _buildInfoItem(
                     Icons.access_time_rounded,
                     'Time',
-                    widget.selectedSlot,
+                    widget.appointment.time,
                   ),
                 ),
               ],
@@ -468,7 +342,11 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
     );
   }
 
-  Widget _buildDetailsCard(String paymentStatus) {
+  Widget _buildDetailsCard() {
+    final statusColor = widget.appointment.status == 'Completed'
+        ? const Color(0xFF4CAF50)
+        : const Color(0xFFFF9800);
+
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -485,37 +363,34 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Booking Details',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w700,
-              color: Color(0xFF1A1A1A),
-            ),
-          ),
+          // const Text(
+          //   'Booking Details',
+          //   style: TextStyle(
+          //     fontSize: 18,
+          //     fontWeight: FontWeight.w700,
+          //     color: Color(0xFF1A1A1A),
+          //   ),
+          // ),
           const SizedBox(height: 16),
           _buildDetailRow(
-            Icons.payment_rounded,
-            'Payment Method',
-            widget.paymentMethod,
+            Icons.person_outline,
+            'Patient Name',
+            widget.appointment.patientName,
             AppConstants.primaryColor,
           ),
-          const SizedBox(height: 14),
-          _buildDetailRow(
-            Icons.account_balance_wallet_outlined,
-            'Payment Status',
-            paymentStatus,
-            paymentStatus == 'Completed'
-                ? const Color(0xFF4CAF50)
-                : const Color(0xFFFF9800),
-          ),
+          // const SizedBox(height: 14),
+          // _buildDetailRow(
+          //   Icons.account_balance_wallet_outlined,
+          //   'Payment Method',
+          //   widget.appointment.paymentMethod ?? 'N/A',
+          //   statusColor,
+          // ),
         ],
       ),
     );
   }
 
-  Widget _buildDetailRow(
-      IconData icon, String label, String value, Color color) {
+  Widget _buildDetailRow(IconData icon, String label, String value, Color color) {
     return Row(
       children: [
         Container(
@@ -549,100 +424,6 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
                 ),
               ),
             ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildActionButtons(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [Color(0xFF42A5F5), Color(0xFF1E88E5)],
-            ),
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: AppConstants.primaryColor.withOpacity(0.4),
-                blurRadius: 16,
-                offset: const Offset(0, 6),
-              ),
-            ],
-          ),
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: () => Navigator.pushNamedAndRemoveUntil(
-                  context, '/home', (route) => false),
-              borderRadius: BorderRadius.circular(16),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.home_rounded, color: Colors.white, size: 22),
-                    SizedBox(width: 10),
-                    Text(
-                      'Go to Home',
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                        letterSpacing: 0.3,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(height: 12),
-        Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: AppConstants.primaryColor.withOpacity(0.3),
-              width: 1.5,
-            ),
-          ),
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, '/appointments');
-              },
-              borderRadius: BorderRadius.circular(16),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.calendar_month_rounded,
-                      color: AppConstants.primaryColor,
-                      size: 22,
-                    ),
-                    SizedBox(width: 10),
-                    Text(
-                      'View Appointments',
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w700,
-                        color: AppConstants.primaryColor,
-                        letterSpacing: 0.3,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
           ),
         ),
       ],

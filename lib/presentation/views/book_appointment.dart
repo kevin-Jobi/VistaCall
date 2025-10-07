@@ -5,6 +5,7 @@ import 'package:vistacall/bloc/booking/booking_state.dart';
 import 'package:vistacall/data/models/doctor.dart';
 import 'package:vistacall/presentation/views/booking_conformation.dart';
 import 'package:vistacall/presentation/widgets/custom_textfield.dart';
+import 'package:intl/intl.dart';
 
 class BookAppointment extends StatelessWidget {
   final DoctorModel doctor;
@@ -24,11 +25,18 @@ class BookAppointment extends StatelessWidget {
     final daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     final availableDays =
         _safeCastToStringList(doctor.availability['availableDays']);
+
+        final formatter = DateFormat('dd-MM-yyyy HH:mm:ss.SSS');
     return List.generate(7, (index) {
       final currentDate = now.add(Duration(days: index));
       final dayAbbr = daysOfWeek[currentDate.weekday - 1];
       return availableDays.contains(dayAbbr) ? currentDate : null;
     }).whereType<DateTime>().toList();
+  //     return List.generate(7, (index) {
+  //   final currentDate = now.add(Duration(days: index));
+  //   final dayAbbr = daysOfWeek[currentDate.weekday - 1];
+  //   return availableDays.contains(dayAbbr) ? formatter.format(currentDate) : null;
+  // }).whereType<DateTime>().toList();
   }
 
   int countAvailableSlots(DateTime date) {

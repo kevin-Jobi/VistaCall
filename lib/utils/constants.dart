@@ -17,4 +17,5 @@ class AppConstants {
   static const String doctorsRoute = '/doctors';
   static const String appWrapperRoute = '/appWrapper';
   static const String chatDetailRoute = '/chatDetail';
+  static const String bookingDetailsRoute = '/booking-details';
 }

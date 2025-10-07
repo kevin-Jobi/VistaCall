@@ -66,6 +66,8 @@ class AppointmentsBloc extends Bloc<AppointmentsEvent, AppointmentsState> {
             time: '',
             status: 'Pending',
             patientName: 'Unknown Patient',
+            paymentMethod: data['paymentMethod'],
+            paymentStatus: data['paymentStatus'],
           );
         }
 
@@ -82,9 +84,8 @@ class AppointmentsBloc extends Bloc<AppointmentsEvent, AppointmentsState> {
                 doctorData?['personal'] as Map<String, dynamic>?;
             doctorName = personalData?['fullName'] ??
                 'Unknown Doctor'; // Access fullName from personal
-             speciality = personalData?['department'] ??
-             'Unknown specialty';
-             ;
+            speciality = personalData?['department'] ?? 'Unknown specialty';
+            ;
           } else {
             print('Doctor document not found for ${parentDocRef.id}');
           }
@@ -95,7 +96,8 @@ class AppointmentsBloc extends Bloc<AppointmentsEvent, AppointmentsState> {
         return Appointment(
           id: doc.id,
           doctorName: doctorName,
-          specialty:speciality, // Can be fetched from personalData?['department']
+          specialty:
+              speciality, // Can be fetched from personalData?['department']
           date: data['date'] ?? '',
           time: data['slot'] ?? '',
           status: data['status'] ?? 'Pending',
