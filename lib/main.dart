@@ -169,6 +169,7 @@ import 'package:vistacall/presentation/views/splashscreen.dart';
 import 'package:vistacall/presentation/views/welcome.dart';
 import 'package:vistacall/presentation/views/wrapper.dart';
 import 'package:vistacall/presentation/widgets/bookappointments/booking_details.dart';
+import 'package:vistacall/presentation/widgets/bookappointments/booking_details_with_rating_page.dart';
 import 'package:vistacall/presentation/widgets/chat/chatDetailScreen.dart';
 import 'package:vistacall/utils/constants.dart';
 import 'package:vistacall/viewmodels/auth_viewmodel.dart';
@@ -284,9 +285,15 @@ class MainApp extends StatelessWidget {
               );
             },
             '/booking-details': (context) {
-              final appointment = ModalRoute.of(context)!.settings.arguments as Appointment;
+              final appointment =
+                  ModalRoute.of(context)!.settings.arguments as Appointment;
               return BookingDetailsPage(appointment: appointment);
             },
+            '/booking-details-with-rating': (context) =>
+                BookingDetailsWithRatingPage(
+                  appointment:
+                      ModalRoute.of(context)!.settings.arguments as Appointment,
+                ),
           },
         ),
       ),

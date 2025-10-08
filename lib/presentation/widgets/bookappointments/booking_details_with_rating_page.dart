@@ -1,26 +1,31 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:vistacall/data/models/appointment.dart';
 import 'package:vistacall/utils/constants.dart';
 
-class BookingDetailsPage extends StatefulWidget {
+class BookingDetailsWithRatingPage extends StatefulWidget {
   final Appointment appointment;
 
-  const BookingDetailsPage({
+  const BookingDetailsWithRatingPage({
     super.key,
     required this.appointment,
   });
 
   @override
-  State<BookingDetailsPage> createState() => _BookingDetailsPageState();
+  State<BookingDetailsWithRatingPage> createState() => _BookingDetailsWithRatingPageState();
 }
 
-class _BookingDetailsPageState extends State<BookingDetailsPage>
+class _BookingDetailsWithRatingPageState extends State<BookingDetailsWithRatingPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation<double> _scaleAnimation;
   late Animation<double> _fadeAnimation;
-  // String? _paymentMethod;
+  double _rating = 0.0;
+  final TextEditingController _reviewController = TextEditingController();
+  bool _isSubmitting = false;
+  bool _hasReviewed = false;
 
   @override
   void initState() {
@@ -29,25 +34,93 @@ class _BookingDetailsPageState extends State<BookingDetailsPage>
       duration: const Duration(milliseconds: 800),
       vsync: this,
     );
-
-    _scaleAnimation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.elasticOut,
-    );
-
     _fadeAnimation = CurvedAnimation(
       parent: _controller,
       curve: Curves.easeIn,
     );
-
     _controller.forward();
-    // _fetchPaymentMethod();
+    _hasReviewed = widget.appointment.reviewed;
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _reviewController.dispose();
     super.dispose();
+  }
+
+  Future<void> _submitReview() async {
+    if (_rating == 0 || _reviewController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please provide a rating and review')),
+      );
+      return;
+    }
+
+    setState(() { _isSubmitting = true; });
+
+    final db = FirebaseFirestore.instance;
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('User not authenticated')),
+      );
+      setState(() { _isSubmitting = false; });
+      return;
+    }
+
+    try {
+      final reviewRef = db
+          .collection('doctors')
+          .doc(widget.appointment.doctorId)
+          .collection('reviews')
+          .doc();
+
+      await reviewRef.set({
+        'userId': user.uid,
+        'rating': _rating,
+        'review': _reviewController.text.trim(),
+        'timestamp': FieldValue.serverTimestamp(),
+        'appointmentId': widget.appointment.id,
+      });
+
+      final bookingRef = db
+          .collection('doctors')
+          .doc(widget.appointment.doctorId)
+          .collection('bookings')
+          .doc(widget.appointment.id);
+
+      await bookingRef.update({'reviewed': true});
+
+      await db.runTransaction((transaction) async {
+        final doctorRef = db.collection('doctors').doc(widget.appointment.doctorId);
+        final doctorSnap = await transaction.get(doctorRef);
+        final currentAverage = doctorSnap.data()?['averageRating']?.toDouble() ?? 0.0;
+        final numRatings = doctorSnap.data()?['numRatings'] ?? 0;
+        final newAverage = (currentAverage * numRatings + _rating) / (numRatings + 1);
+        transaction.update(doctorRef, {
+          'averageRating': newAverage,
+          'numRatings': numRatings + 1,
+        });
+      });
+
+      setState(() {
+        _hasReviewed = true;
+        _isSubmitting = false;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Review submitted successfully')),
+      );
+
+      // Optionally refresh appointments by emitting an event or popping to reload
+      Navigator.pop(context);
+    } catch (e) {
+      setState(() { _isSubmitting = false; });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to submit review: $e')),
+      );
+    }
   }
 
   @override
@@ -65,14 +138,12 @@ class _BookingDetailsPageState extends State<BookingDetailsPage>
                 padding: const EdgeInsets.all(20),
                 child: Column(
                   children: [
-                    _buildSuccessIcon(),
-                    const SizedBox(height: 32),
-                    _buildSuccessMessage(),
-                    const SizedBox(height: 24),
                     _buildAppointmentCard(dateStr),
                     const SizedBox(height: 16),
                     _buildDetailsCard(),
-                    const SizedBox(height: 24), // No action buttons
+                    const SizedBox(height: 24),
+                    if (widget.appointment.status == 'Completed')
+                      _buildRatingSection(),
                   ],
                 ),
               ),
@@ -111,7 +182,7 @@ class _BookingDetailsPageState extends State<BookingDetailsPage>
           ),
           const SizedBox(width: 12),
           const Text(
-            'Booking Details',
+            'Appointment Details',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w700,
@@ -124,92 +195,8 @@ class _BookingDetailsPageState extends State<BookingDetailsPage>
     );
   }
 
-  Widget _buildSuccessIcon() {
-    return ScaleTransition(
-      scale: _scaleAnimation,
-      child: Container(
-        width: 120,
-        height: 120,
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [Color(0xFF4CAF50), Color(0xFF81C784)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xFF4CAF50).withOpacity(0.4),
-              blurRadius: 30,
-              offset: const Offset(0, 10),
-              spreadRadius: 0,
-            ),
-          ],
-        ),
-        child: Stack(
-          children: [
-            Positioned(
-              top: 20,
-              right: 20,
-              child: Container(
-                width: 30,
-                height: 30,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.white.withOpacity(0.4),
-                      Colors.white.withOpacity(0.0),
-                    ],
-                  ),
-                  shape: BoxShape.circle,
-                ),
-              ),
-            ),
-            const Center(
-              child: Icon(
-                Icons.check_rounded,
-                color: Colors.white,
-                size: 64,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSuccessMessage() {
-    return FadeTransition(
-      opacity: _fadeAnimation,
-      child: Column(
-        children: [
-          const Text(
-            'Booking Details',
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.w800,
-              color: Color(0xFF1A1A1A),
-              letterSpacing: 0.3,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 12),
-          Text(
-            'View the details of your appointment',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: Colors.grey[600],
-              letterSpacing: 0.2,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildAppointmentCard(String dateStr) {
+    // Similar to original, unchanged for brevity
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -412,6 +399,100 @@ class _BookingDetailsPageState extends State<BookingDetailsPage>
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildRatingSection() {
+    return FadeTransition(
+      opacity: _fadeAnimation,
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.06),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Rate Your Experience',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+                color: Color(0xFF1A1A1A),
+              ),
+            ),
+            const SizedBox(height: 16),
+            if (_hasReviewed)
+              const Text(
+                'You have already submitted a review for this appointment.',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.green,
+                ),
+              )
+            else ...[
+              RatingBar.builder(
+                initialRating: _rating,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                itemBuilder: (context, _) => const Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                ),
+                onRatingUpdate: (rating) {
+                  setState(() {
+                    _rating = rating;
+                  });
+                },
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: _reviewController,
+                maxLines: 4,
+                decoration: InputDecoration(
+                  hintText: 'Write your review here...',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: _isSubmitting ? null : _submitReview,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppConstants.primaryColor,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                ),
+                child: _isSubmitting
+                    ? const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                      )
+                    : const Text('Submit Review'),
+              ),
+            ],
+          ],
+        ),
+      ),
     );
   }
 

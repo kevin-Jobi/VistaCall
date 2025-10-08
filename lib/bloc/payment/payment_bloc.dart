@@ -93,6 +93,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
           'paymentStatus':
               event.paymentMethod == 'Pay Online' ? 'Completed' : 'Pending',
           'status': 'Pending',
+          'reviewed':false,
           'createdAt': FieldValue.serverTimestamp(),
         });
       });

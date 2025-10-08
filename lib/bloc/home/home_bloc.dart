@@ -54,7 +54,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           specialty: 'Cardiology Consultation',
           date: 'May 2, 2025',
           time: '10:30 AM',
-          status: 'Confirmed',
+          status: 'Confirmed', doctorId: '', reviewed: false,
         ),
       ];
 
