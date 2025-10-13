@@ -159,7 +159,7 @@ class AppointmentCard extends StatelessWidget {
   String _formatDate(String dateStr) {
     try {
       final date = DateTime.parse(dateStr);
-      return DateFormat('dd-MM-yyyy').format(date);
+      return DateFormat('d MMM yyyy').format(date);
     } catch (_) {
       return dateStr;
     }
