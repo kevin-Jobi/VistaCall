@@ -3,6 +3,7 @@ import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:vistacall/bloc/appointments/appointments_bloc.dart';
 import 'package:vistacall/bloc/auth/auth_bloc.dart';
 import 'package:vistacall/bloc/chat/chat_bloc.dart';
@@ -19,7 +20,6 @@ import 'package:vistacall/data/services/navigation_service.dart';
 import 'package:vistacall/firebase_options.dart';
 import 'package:vistacall/presentation/views/appointments_screen.dart';
 import 'package:vistacall/presentation/views/auth_screen.dart';
-import 'package:vistacall/presentation/views/booking_successpage.dart';
 import 'package:vistacall/presentation/views/chat_screen.dart';
 import 'package:vistacall/presentation/views/doctor_list_screen.dart';
 import 'package:vistacall/presentation/views/dr.profile.dart';
@@ -86,7 +86,7 @@ class MainApp extends StatelessWidget {
           homeBloc,
           doctorListBloc,
         ),
-        child: MaterialApp(
+        child: GetMaterialApp(
           navigatorKey: NavigationService.navigatorKey,
           debugShowCheckedModeBanner: false,
           title: 'Vistacall',

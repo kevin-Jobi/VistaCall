@@ -137,13 +137,13 @@ class AppointmentCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
-            Icons.chat_bubble_rounded,
+            Icons.details_outlined,
             color: Colors.white,
             size: 14,
           ),
           SizedBox(width: 4),
           Text(
-            'Chat',
+            'Details',
             style: TextStyle(
               color: Colors.white,
               fontSize: 12,

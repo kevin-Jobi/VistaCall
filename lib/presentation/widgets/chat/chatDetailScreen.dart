@@ -568,37 +568,39 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> with TickerProvider
         ],
       ),
       actions: [
-        IconButton(
-          icon: Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Colors.grey[100],
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: const Icon(
-              Icons.videocam_rounded,
-              color: Colors.black87,
-              size: 22,
-            ),
-          ),
-          onPressed: () {},
-        ),
-        IconButton(
-          icon: Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Colors.grey[100],
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: const Icon(
-              Icons.phone_rounded,
-              color: Colors.black87,
-              size: 20,
-            ),
-          ),
-          onPressed: () {},
-        ),
-        const SizedBox(width: 8),
+        // IconButton(
+        //   icon: Container(
+        //     padding: const EdgeInsets.all(8),
+        //     decoration: BoxDecoration(
+        //       color: Colors.grey[100],
+        //       borderRadius: BorderRadius.circular(12),
+        //     ),
+        //     child: const Icon(
+        //       Icons.videocam_rounded,
+        //       color: Colors.black87,
+        //       size: 22,
+        //     ),
+        //   ),
+        //   onPressed: () {},
+        // ),
+        // IconButton(
+        //   icon: Container(
+        //     padding: const EdgeInsets.all(8),
+        //     decoration: BoxDecoration(
+        //       color: Colors.grey[100],
+        //       borderRadius: BorderRadius.circular(12),
+        //     ),
+        //     child: const Icon(
+        //       Icons.phone_rounded,
+        //       color: Colors.black87,
+        //       size: 20,
+        //     ),
+        //   ),
+        //   onPressed: () {
+
+        //   },
+        // ),
+        // const SizedBox(width: 8),
       ],
     );
   }
@@ -923,12 +925,12 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> with TickerProvider
                 color: Colors.grey[100],
                 shape: BoxShape.circle,
               ),
-              child: IconButton(
-                icon: Icon(Icons.add, color: Colors.grey[700]),
-                onPressed: () {
-                  // Add attachment functionality
-                },
-              ),
+              // child: IconButton(
+              //   icon: Icon(Icons.add, color: Colors.grey[700]),
+              //   onPressed: () {
+              //     // Add attachment functionality
+              //   },
+              // ),
             ),
             const SizedBox(width: 8),
             Expanded(
@@ -988,8 +990,9 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> with TickerProvider
                       : null,
                 ),
                 child: IconButton(
-                  icon: Icon(
-                    _isTyping ? Icons.send_rounded : Icons.mic_rounded,
+                  icon: const Icon(
+                    // _isTyping ? Icons.send_rounded : Icons.mic_rounded,
+                    Icons.send_rounded,
                     color: Colors.white,
                     size: 22,
                   ),

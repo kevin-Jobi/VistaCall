@@ -34,7 +34,7 @@ class _DoctorListScreenState extends State<DoctorListScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CircularProgressIndicator(
+                  const CircularProgressIndicator(
                     color: AppConstants.primaryColor,
                     strokeWidth: 3,
                   ),
@@ -172,7 +172,7 @@ class _DoctorListScreenState extends State<DoctorListScreen> {
                   color: AppConstants.primaryColor.withOpacity(0.15),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.medical_services_rounded,
                   color: AppConstants.primaryColor,
                   size: 20,
@@ -223,7 +223,7 @@ class _DoctorListScreenState extends State<DoctorListScreen> {
       ),
       child: PopupMenuButton(
         color: const Color.fromARGB(255, 237, 246, 251),
-        icon: Icon(
+        icon: const Icon(
           Icons.tune_rounded,
           color: AppConstants.primaryColor,
           size: 22,
