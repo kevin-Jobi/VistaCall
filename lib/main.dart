@@ -32,6 +32,7 @@ import 'package:vistacall/presentation/views/wrapper.dart';
 import 'package:vistacall/presentation/widgets/bookappointments/booking_details.dart';
 import 'package:vistacall/presentation/widgets/bookappointments/booking_details_with_rating_page.dart';
 import 'package:vistacall/presentation/widgets/chat/chatDetailScreen.dart';
+import 'package:vistacall/theme/app_theme.dart';
 import 'package:vistacall/utils/constants.dart';
 import 'package:vistacall/viewmodels/auth_viewmodel.dart';
 import 'package:vistacall/viewmodels/favorite_viewmodel.dart';
@@ -90,22 +91,26 @@ class MainApp extends StatelessWidget {
           navigatorKey: NavigationService.navigatorKey,
           debugShowCheckedModeBanner: false,
           title: 'Vistacall',
-          theme: ThemeData(
-            primaryColor: AppConstants.primaryColor,
-            scaffoldBackgroundColor: AppConstants.backgroundColor,
-            textTheme: const TextTheme(
-              bodyMedium: TextStyle(color: Colors.black54),
-            ),
-            elevatedButtonTheme: ElevatedButtonThemeData(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppConstants.primaryColor,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
-            ),
-          ),
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: ThemeMode.light,
+
+          // ThemeData(
+          //   primaryColor: AppConstants.primaryColor,
+          //   scaffoldBackgroundColor: AppConstants.backgroundColor,
+          //   textTheme: const TextTheme(
+          //     bodyMedium: TextStyle(color: Colors.black54),
+          //   ),
+          //   elevatedButtonTheme: ElevatedButtonThemeData(
+          //     style: ElevatedButton.styleFrom(
+          //       backgroundColor: AppConstants.primaryColor,
+          //       foregroundColor: Colors.white,
+          //       shape: RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.circular(30),
+          //       ),
+          //     ),
+          //   ),
+          // ),
           initialRoute: AppConstants.splashRoute,
           routes: {
             AppConstants.appWrapperRoute: (context) => const AppWrapper(),
