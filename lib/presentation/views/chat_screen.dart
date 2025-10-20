@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vistacall/presentation/widgets/chat/chatDetailScreen.dart';
+import 'package:vistacall/presentation/views/chatDetailScreen.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../data/models/doctor.dart';
 import '../../../viewmodels/booking_confirmation_viewmodel.dart';
 
 class DoctorCard extends StatelessWidget {

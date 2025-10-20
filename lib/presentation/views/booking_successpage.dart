@@ -1,7 +1,8 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:vistacall/data/models/doctor.dart';
-import 'package:vistacall/utils/constants.dart';
 
 class BookingSuccessPage extends StatefulWidget {
   final DoctorModel doctor;
@@ -56,31 +57,33 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     final dateStr =
         '${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, '0')}-${widget.selectedDate.day.toString().padLeft(2, '0')}';
     final paymentStatus =
         widget.paymentMethod == 'Pay Online' ? 'Completed' : 'Pending';
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
+      backgroundColor: colorScheme.background, // Dynamic background
       body: SafeArea(
         child: Column(
           children: [
-            _buildHeader(),
+            _buildHeader(theme, colorScheme),
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(20),
                 child: Column(
                   children: [
-                    _buildSuccessIcon(),
+                    _buildSuccessIcon(colorScheme),
                     const SizedBox(height: 32),
-                    _buildSuccessMessage(),
+                    _buildSuccessMessage(theme, colorScheme),
                     const SizedBox(height: 24),
-                    _buildAppointmentCard(dateStr),
+                    _buildAppointmentCard(dateStr, theme, colorScheme),
                     const SizedBox(height: 16),
-                    _buildDetailsCard(paymentStatus),
+                    _buildDetailsCard(paymentStatus, theme, colorScheme),
                     const SizedBox(height: 24),
-                    _buildActionButtons(context),
+                    _buildActionButtons(context, theme, colorScheme),
                     const SizedBox(height: 20),
                   ],
                 ),
@@ -92,14 +95,14 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(ThemeData theme, ColorScheme colorScheme) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surface, // Dynamic surface
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: colorScheme.onSurface.withOpacity(0.05),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -109,22 +112,21 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Colors.grey[100],
+              color: colorScheme.surfaceVariant.withOpacity(0.1),
               borderRadius: BorderRadius.circular(10),
             ),
             child: IconButton(
               onPressed: () => Navigator.pop(context),
-              icon: const Icon(Icons.arrow_back_ios_rounded, size: 20),
-              color: Colors.grey[700],
+              icon: Icon(Icons.arrow_back_ios_rounded,
+                  size: 20, color: colorScheme.onSurfaceVariant),
             ),
           ),
           const SizedBox(width: 12),
-          const Text(
+          Text(
             'Booking Confirmed',
-            style: TextStyle(
-              fontSize: 20,
+            style: theme.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.w700,
-              color: Color(0xFF1A1A1A),
+              color: colorScheme.onSurface,
               letterSpacing: 0.2,
             ),
           ),
@@ -133,22 +135,25 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
     );
   }
 
-  Widget _buildSuccessIcon() {
+  Widget _buildSuccessIcon(ColorScheme colorScheme) {
     return ScaleTransition(
       scale: _scaleAnimation,
       child: Container(
         width: 120,
         height: 120,
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [Color(0xFF4CAF50), Color(0xFF81C784)],
+          gradient: LinearGradient(
+            colors: [
+              colorScheme.secondary.withValues(alpha: 1.5),
+              colorScheme.secondaryContainer,
+            ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF4CAF50).withOpacity(0.4),
+              color: colorScheme.secondary.withOpacity(0.4),
               blurRadius: 30,
               offset: const Offset(0, 10),
               spreadRadius: 0,
@@ -157,7 +162,6 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
         ),
         child: Stack(
           children: [
-            // Shine effect
             Positioned(
               top: 20,
               right: 20,
@@ -167,18 +171,18 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Colors.white.withOpacity(0.4),
-                      Colors.white.withOpacity(0.0),
+                      colorScheme.onSecondary.withOpacity(0.4),
+                      colorScheme.onSecondary.withOpacity(0.0),
                     ],
                   ),
                   shape: BoxShape.circle,
                 ),
               ),
             ),
-            const Center(
+            Center(
               child: Icon(
                 Icons.check_rounded,
-                color: Colors.white,
+                color: colorScheme.onSecondary,
                 size: 64,
               ),
             ),
@@ -188,17 +192,16 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
     );
   }
 
-  Widget _buildSuccessMessage() {
+  Widget _buildSuccessMessage(ThemeData theme, ColorScheme colorScheme) {
     return FadeTransition(
       opacity: _fadeAnimation,
       child: Column(
         children: [
-          const Text(
+          Text(
             'Booking Successful!',
-            style: TextStyle(
-              fontSize: 28,
+            style: theme.textTheme.headlineSmall?.copyWith(
               fontWeight: FontWeight.w800,
-              color: Color(0xFF1A1A1A),
+              color: colorScheme.onSurface,
               letterSpacing: 0.3,
             ),
             textAlign: TextAlign.center,
@@ -206,10 +209,9 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
           const SizedBox(height: 12),
           Text(
             'Your appointment has been confirmed',
-            style: TextStyle(
-              fontSize: 16,
+            style: theme.textTheme.bodyMedium?.copyWith(
               fontWeight: FontWeight.w500,
-              color: Colors.grey[600],
+              color: colorScheme.onSurfaceVariant,
               letterSpacing: 0.2,
             ),
             textAlign: TextAlign.center,
@@ -219,14 +221,15 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
     );
   }
 
-  Widget _buildAppointmentCard(String dateStr) {
+  Widget _buildAppointmentCard(
+      String dateStr, ThemeData theme, ColorScheme colorScheme) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppConstants.primaryColor,
-            AppConstants.primaryColor.withOpacity(0.85),
+            colorScheme.secondary,
+            colorScheme.secondaryContainer.withValues(alpha: 0.85),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -234,7 +237,7 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: AppConstants.primaryColor.withOpacity(0.3),
+            color: colorScheme.secondary.withValues(alpha: .2),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -247,12 +250,12 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
+                  color: colorScheme.onSecondary.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(14),
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.person_rounded,
-                  color: Colors.white,
+                  color: colorScheme.onSecondary,
                   size: 28,
                 ),
               ),
@@ -263,20 +266,18 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
                   children: [
                     Text(
                       'Dr. ${widget.doctor.personal['fullName']}',
-                      style: const TextStyle(
-                        fontSize: 20,
+                      style: theme.textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.w700,
-                        color: Colors.white,
+                        color: colorScheme.onPrimary,
                         letterSpacing: 0.2,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       widget.doctor.personal['department'] ?? 'General',
-                      style: TextStyle(
-                        fontSize: 14,
+                      style: theme.textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w500,
-                        color: Colors.white.withOpacity(0.9),
+                        color: colorScheme.onPrimary.withValues(alpha: .9),
                       ),
                     ),
                   ],
@@ -288,10 +289,10 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.15),
+              color: colorScheme.onPrimary.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(14),
               border: Border.all(
-                color: Colors.white.withOpacity(0.3),
+                color: colorScheme.onPrimary.withValues(alpha: .3),
                 width: 1,
               ),
             ),
@@ -302,18 +303,22 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
                     Icons.calendar_today_rounded,
                     'Date',
                     _formatDate(dateStr),
+                    theme,
+                    colorScheme,
                   ),
                 ),
                 Container(
                   width: 1,
                   height: 40,
-                  color: Colors.white.withOpacity(0.3),
+                  color: colorScheme.onPrimary.withValues(alpha: 0.3),
                 ),
                 Expanded(
                   child: _buildInfoItem(
                     Icons.access_time_rounded,
                     'Time',
                     widget.selectedSlot,
+                    theme,
+                    colorScheme,
                   ),
                 ),
               ],
@@ -324,26 +329,25 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
     );
   }
 
-  Widget _buildInfoItem(IconData icon, String label, String value) {
+  Widget _buildInfoItem(IconData icon, String label, String value,
+      ThemeData theme, ColorScheme colorScheme) {
     return Column(
       children: [
-        Icon(icon, color: Colors.white, size: 20),
+        Icon(icon, color: colorScheme.onPrimary, size: 20),
         const SizedBox(height: 8),
         Text(
           label,
-          style: TextStyle(
-            fontSize: 12,
+          style: theme.textTheme.bodySmall?.copyWith(
             fontWeight: FontWeight.w500,
-            color: Colors.white.withOpacity(0.8),
+            color: colorScheme.onPrimary.withOpacity(0.8),
           ),
         ),
         const SizedBox(height: 4),
         Text(
           value,
-          style: const TextStyle(
-            fontSize: 14,
+          style: theme.textTheme.bodyMedium?.copyWith(
             fontWeight: FontWeight.w700,
-            color: Colors.white,
+            color: colorScheme.onPrimary,
           ),
           textAlign: TextAlign.center,
         ),
@@ -351,15 +355,16 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
     );
   }
 
-  Widget _buildDetailsCard(String paymentStatus) {
+  Widget _buildDetailsCard(
+      String paymentStatus, ThemeData theme, ColorScheme colorScheme) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: colorScheme.onSurface.withOpacity(0.06),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -368,12 +373,11 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Booking Details',
-            style: TextStyle(
-              fontSize: 18,
+            style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.w700,
-              color: Color(0xFF1A1A1A),
+              color: colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 16),
@@ -381,7 +385,9 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
             Icons.payment_rounded,
             'Payment Method',
             widget.paymentMethod,
-            AppConstants.primaryColor,
+            colorScheme.primary,
+            theme,
+            colorScheme,
           ),
           const SizedBox(height: 14),
           _buildDetailRow(
@@ -389,16 +395,18 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
             'Payment Status',
             paymentStatus,
             paymentStatus == 'Completed'
-                ? const Color(0xFF4CAF50)
-                : const Color(0xFFFF9800),
+                ? colorScheme.primary
+                : colorScheme.error,
+            theme,
+            colorScheme,
           ),
         ],
       ),
     );
   }
 
-  Widget _buildDetailRow(
-      IconData icon, String label, String value, Color color) {
+  Widget _buildDetailRow(IconData icon, String label, String value, Color color,
+      ThemeData theme, ColorScheme colorScheme) {
     return Row(
       children: [
         Container(
@@ -416,19 +424,17 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
             children: [
               Text(
                 label,
-                style: TextStyle(
-                  fontSize: 13,
+                style: theme.textTheme.bodySmall?.copyWith(
                   fontWeight: FontWeight.w500,
-                  color: Colors.grey[600],
+                  color: colorScheme.onSurfaceVariant,
                 ),
               ),
               const SizedBox(height: 2),
               Text(
                 value,
-                style: const TextStyle(
-                  fontSize: 15,
+                style: theme.textTheme.bodyMedium?.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF1A1A1A),
+                  color: colorScheme.onSurface,
                 ),
               ),
             ],
@@ -438,19 +444,23 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
     );
   }
 
-  Widget _buildActionButtons(BuildContext context) {
+  Widget _buildActionButtons(
+      BuildContext context, ThemeData theme, ColorScheme colorScheme) {
     return Column(
       children: [
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [Color(0xFF42A5F5), Color(0xFF1E88E5)],
+            gradient: LinearGradient(
+              colors: [
+                colorScheme.secondary,
+                colorScheme.secondaryContainer.withValues(alpha: 1.0)
+              ],
             ),
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: AppConstants.primaryColor.withOpacity(0.4),
+                color: colorScheme.secondary.withValues(alpha: 0.2),
                 blurRadius: 16,
                 offset: const Offset(0, 6),
               ),
@@ -462,19 +472,19 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
               onTap: () => Navigator.pushNamedAndRemoveUntil(
                   context, '/home', (route) => false),
               borderRadius: BorderRadius.circular(16),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 16),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.home_rounded, color: Colors.white, size: 22),
-                    SizedBox(width: 10),
+                    Icon(Icons.home_rounded,
+                        color: colorScheme.onPrimary, size: 22),
+                    const SizedBox(width: 10),
                     Text(
                       'Go to Home',
-                      style: TextStyle(
-                        fontSize: 17,
+                      style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w700,
-                        color: Colors.white,
+                        color: colorScheme.onPrimary,
                         letterSpacing: 0.3,
                       ),
                     ),
@@ -488,10 +498,10 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: colorScheme.surface,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: AppConstants.primaryColor.withOpacity(0.3),
+              color: colorScheme.primary.withValues(alpha: .3),
               width: 1.5,
             ),
           ),
@@ -502,23 +512,22 @@ class _BookingSuccessPageState extends State<BookingSuccessPage>
                 Navigator.pushNamed(context, '/appointments');
               },
               borderRadius: BorderRadius.circular(16),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 16),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
                       Icons.calendar_month_rounded,
-                      color: AppConstants.primaryColor,
+                      color: colorScheme.primary,
                       size: 22,
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Text(
                       'View Appointments',
-                      style: TextStyle(
-                        fontSize: 17,
+                      style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w700,
-                        color: AppConstants.primaryColor,
+                        color: colorScheme.primary,
                         letterSpacing: 0.3,
                       ),
                     ),

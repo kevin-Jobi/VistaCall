@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../bloc/payment/payment_bloc.dart';
 import '../../../bloc/payment/payment_event.dart';
 import '../../../viewmodels/booking_confirmation_viewmodel.dart';
-import '../../../data/models/doctor.dart';
 
 class ConfirmButton extends StatelessWidget {
   final BookingConfirmationViewModel viewModel;

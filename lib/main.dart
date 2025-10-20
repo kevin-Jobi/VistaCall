@@ -31,7 +31,7 @@ import 'package:vistacall/presentation/views/welcome.dart';
 import 'package:vistacall/presentation/views/wrapper.dart';
 import 'package:vistacall/presentation/widgets/bookappointments/booking_details.dart';
 import 'package:vistacall/presentation/widgets/bookappointments/booking_details_with_rating_page.dart';
-import 'package:vistacall/presentation/widgets/chat/chatDetailScreen.dart';
+import 'package:vistacall/presentation/views/chatDetailScreen.dart';
 import 'package:vistacall/theme/app_theme.dart';
 import 'package:vistacall/utils/constants.dart';
 import 'package:vistacall/viewmodels/auth_viewmodel.dart';

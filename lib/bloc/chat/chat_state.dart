@@ -1,5 +1,5 @@
 import 'package:vistacall/data/models/message.dart';
-import 'package:vistacall/presentation/widgets/chat/chatDetailScreen.dart';
+import 'package:vistacall/presentation/views/chatDetailScreen.dart';
 
 // abstract class ChatState {}
 

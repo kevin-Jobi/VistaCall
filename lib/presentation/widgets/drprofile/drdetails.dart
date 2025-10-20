@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart'; 
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:vistacall/theme/app_theme.dart'; 
 
 class Drdetails extends StatelessWidget {
   final dynamic doctor; // DoctorModel
@@ -34,9 +35,9 @@ class Drdetails extends StatelessWidget {
                   : '${averageRating.toStringAsFixed(1)} ($numRatings)',
               icon: RatingBarIndicator(
                 rating: averageRating,
-                itemBuilder: (context, _) => const Icon(
+                itemBuilder: (context, _) =>  Icon(
                   Icons.star,
-                  color: Colors.amber,
+                  color: AppTheme.accentColorLight.withValues(alpha: .9),
                 ),
                 itemCount: 5,
                 itemSize: 20.0,

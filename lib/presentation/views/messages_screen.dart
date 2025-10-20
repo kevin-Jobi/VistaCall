@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vistacall/bloc/messages/messages_bloc.dart';
 import 'package:vistacall/bloc/messages/messages_event.dart';
 import 'package:vistacall/bloc/messages/messages_state.dart';
-import 'package:vistacall/presentation/widgets/custom_bottom_navbar.dart';
+import 'package:vistacall/presentation/widgets/custom_widgets/custom_bottom_navbar.dart';
 import 'package:vistacall/presentation/widgets/messages/conversation_list.dart';
 import 'package:vistacall/presentation/widgets/messages/messages_app_bar.dart';
 import 'package:vistacall/viewmodels/messages_viewmodel.dart';

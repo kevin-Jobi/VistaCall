@@ -1,4 +1,3 @@
-// lib/presentation/views/home/home_body.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -11,9 +10,7 @@ import 'package:vistacall/presentation/views/home/doctor_card.dart';
 import 'package:vistacall/presentation/views/home/doctor_categories_grid.dart';
 import 'package:vistacall/presentation/views/home/health_care_articles.dart';
 import 'package:vistacall/presentation/views/home/search_section.dart';
-
 import 'package:vistacall/viewmodels/home_viewmodel.dart';
-import 'package:vistacall/utils/constants.dart';
 
 class HomeBody extends StatelessWidget {
   const HomeBody({super.key});

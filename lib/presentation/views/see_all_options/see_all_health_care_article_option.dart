@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:vistacall/presentation/10_health_eating_habits.dart';
-import 'package:vistacall/presentation/fitness_tips_and_busy_people.dart';
-import 'package:vistacall/presentation/mental_health.dart';
+import 'package:vistacall/presentation/widgets/health_care_articles_contant_and_widgets/mental_health/10_health_eating_habits.dart';
+import 'package:vistacall/presentation/widgets/health_care_articles_contant_and_widgets/mental_health/fitness_tips_and_busy_people.dart';
+import 'package:vistacall/presentation/widgets/health_care_articles_contant_and_widgets/mental_health/mental_health.dart';
 import 'package:vistacall/utils/app.theme.dart';
 
 class SeeAllHealthArticles extends StatelessWidget {

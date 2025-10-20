@@ -6,7 +6,7 @@ import 'package:vistacall/bloc/auth/auth_state.dart';
 import 'package:vistacall/presentation/widgets/auth/auth_image_header.dart';
 import 'package:vistacall/presentation/widgets/auth/auth_buttons.dart';
 import 'package:vistacall/presentation/widgets/auth/auth_toggle_mode.dart';
-import 'package:vistacall/presentation/widgets/custom_textfield.dart';
+import 'package:vistacall/presentation/widgets/custom_widgets/custom_textfield.dart';
 
 class AuthForm extends StatefulWidget {
   const AuthForm({super.key});

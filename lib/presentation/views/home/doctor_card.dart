@@ -15,9 +15,11 @@ class DoctorCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fullName = doctor.personal['fullName']?.toString() ?? 'Unknown Doctor';
+    final fullName =
+        doctor.personal['fullName']?.toString() ?? 'Unknown Doctor';
     final department = doctor.personal['department']?.toString() ?? 'General';
-    final experience = doctor.availability?['yearsOfExperience']?.toString() ?? 'N/A';
+    final experience =
+        doctor.availability?['yearsOfExperience']?.toString() ?? 'N/A';
     final fees = doctor.availability?['fees']?.toString() ?? 'N/A';
     final imageUrl = doctor.personal?['profileImageUrl']?.toString();
 
@@ -33,7 +35,7 @@ class DoctorCard extends StatelessWidget {
         border: Border.all(color: Colors.grey[200]!, width: 1),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: .05),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -50,7 +52,9 @@ class DoctorCard extends StatelessWidget {
               children: [
                 _buildDoctorAvatar(imageUrl),
                 const SizedBox(width: 14),
-                Expanded(child: _buildDoctorInfo(fullName, department, experience, fees)),
+                Expanded(
+                    child: _buildDoctorInfo(
+                        fullName, department, experience, fees)),
                 _buildViewButton(),
               ],
             ),
@@ -68,7 +72,7 @@ class DoctorCard extends StatelessWidget {
         gradient: LinearGradient(
           colors: [
             AppConstants.primaryColor,
-            AppConstants.primaryColor.withOpacity(0.8),
+            AppConstants.primaryColor.withValues(alpha: 0.8),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -83,7 +87,8 @@ class DoctorCard extends StatelessWidget {
                 fit: BoxFit.cover,
                 width: 60,
                 height: 60,
-                errorBuilder: (context, error, stackTrace) => _buildDefaultAvatar(),
+                errorBuilder: (context, error, stackTrace) =>
+                    _buildDefaultAvatar(),
               )
             : _buildDefaultAvatar(),
       ),
@@ -94,7 +99,8 @@ class DoctorCard extends StatelessWidget {
     return const Icon(Icons.person_rounded, color: Colors.white, size: 32);
   }
 
-  Widget _buildDoctorInfo(String fullName, String department, String experience, String fees) {
+  Widget _buildDoctorInfo(
+      String fullName, String department, String experience, String fees) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -113,9 +119,11 @@ class DoctorCard extends StatelessWidget {
         const SizedBox(height: 10),
         Row(
           children: [
-            _buildInfoChip(Icons.work_outline_rounded, '$experience yrs', const Color(0xFF4CAF50)),
+            _buildInfoChip(Icons.work_outline_rounded, '$experience yrs',
+                const Color(0xFF4CAF50)),
             const SizedBox(width: 8),
-            _buildInfoChip(Icons.payments_outlined, '₹$fees', const Color(0xFFFF9800)),
+            _buildInfoChip(
+                Icons.payments_outlined, '₹$fees', const Color(0xFFFF9800)),
           ],
         ),
       ],
@@ -126,14 +134,16 @@ class DoctorCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        color: AppConstants.primaryColor.withOpacity(0.1),
+        color: AppConstants.primaryColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: AppConstants.primaryColor.withOpacity(0.2)),
+        border:
+            Border.all(color: AppConstants.primaryColor.withValues(alpha: 0.2)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.medical_services_rounded, size: 13, color: AppConstants.primaryColor),
+          Icon(Icons.medical_services_rounded,
+              size: 13, color: AppConstants.primaryColor),
           const SizedBox(width: 6),
           Flexible(
             child: Text(
@@ -156,9 +166,9 @@ class DoctorCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -167,7 +177,8 @@ class DoctorCard extends StatelessWidget {
           const SizedBox(width: 5),
           Text(
             text,
-            style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: color),
+            style: TextStyle(
+                fontSize: 11, fontWeight: FontWeight.w600, color: color),
           ),
         ],
       ),
@@ -188,14 +199,14 @@ class DoctorCard extends StatelessWidget {
         children: [
           Icon(Icons.arrow_forward_rounded, color: Colors.white, size: 20),
           SizedBox(height: 3),
-          Text(
-            'View',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 10,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
+          // Text(
+          //   'View',
+          //   style: TextStyle(
+          //     color: Colors.white,
+          //     fontSize: 10,
+          //     fontWeight: FontWeight.w700,
+          //   ),
+          // ),
         ],
       ),
     );

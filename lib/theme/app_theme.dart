@@ -11,6 +11,7 @@ class AppTheme {
   // Secondary Colors
   static const Color secondaryColor = Color(0xFF4CAF50);
   static const Color accentColor = Color(0xFFFF9800);
+  static const Color accentColorLight = Color.fromARGB(255, 255, 208, 77);
   
   // Background Colors
   static const Color backgroundColor = Color(0xFFF8FAFC);

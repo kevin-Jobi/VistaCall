@@ -1,103 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:vistacall/data/models/conversation.dart';
-// import 'package:vistacall/utils/constants.dart';
-
-// class ConversationList extends StatelessWidget {
-//   final List<Conversation> conversations;
-//   final Function(Conversation) onConversationTap;
-
-//   const ConversationList({
-//     super.key,
-//     required this.conversations,
-//     required this.onConversationTap,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     if (conversations.isEmpty) {
-//       return const Center(child: Text('No messages yet'));
-//     }
-
-//     return ListView.separated(
-//       padding: const EdgeInsets.symmetric(vertical: 8),
-//       itemCount: conversations.length,
-//       itemBuilder: (context, index) {
-//         final conversation = conversations[index];
-//         return _buildConversationTile(conversation, context);
-//       },
-//       separatorBuilder: (context, index) => const Divider(
-//         height: 1,
-//         thickness: 1,
-//         color: Colors.grey,
-//       ),
-//     );
-//   }
-
-//   Widget _buildConversationTile(
-//       Conversation conversation, BuildContext context) {
-//         final formattedTime = _formatTimestamp(conversation.timestamp);
-//     return ListTile(
-//       leading: CircleAvatar(
-//         backgroundColor: Colors.grey,
-//         child: Text(conversation.doctorName.isNotEmpty
-//             ? conversation.doctorName[0]
-//             : '?'),
-//       ),
-//       title: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//           Text(
-//             conversation.doctorName,
-//             style: const TextStyle(fontWeight: FontWeight.bold),
-//           ),
-//           Text(
-//             formattedTime,
-//             style: const TextStyle(
-//               fontSize: 12,
-//               color: Colors.grey,
-//             ),
-//           ),
-//         ],
-//       ),
-//       subtitle: Row(
-//         children: [
-//           if (conversation.isUnread)
-//             Container(
-//               margin: const EdgeInsets.only(right: 8),
-//               width: 8,
-//               height: 8,
-//               decoration: const BoxDecoration(
-//                 shape: BoxShape.circle,
-//                 color: AppConstants.primaryColor,
-//               ),
-//             ),
-//           Expanded(
-//             child: Text(
-//               conversation.lastMessage,
-//               maxLines: 1,
-//               overflow: TextOverflow.ellipsis,
-//               style: TextStyle(
-//                 color: conversation.isUnread ? Colors.black : Colors.grey,
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//       onTap: () => onConversationTap(conversation),
-//     );
-//   }
-
-//   String _formatTimestamp(DateTime date) {
-//   final now = DateTime.now();
-//   if (date.year == now.year && date.month == now.month && date.day == now.day) {
-//     return '${date.hour}:${date.minute}'.padLeft(5, '0');
-//   } else if (date.year == now.year && date.month == now.month && date.day == now.day - 1) {
-//     return 'Yesterday';
-//   } else {
-//     return '${date.day}/${date.month}';
-//   }
-// }
-// }
 
 
 import 'package:flutter/material.dart';
@@ -124,13 +24,13 @@ class ConversationList extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: AppConstants.primaryColor.withOpacity(0.1),
+                color: AppConstants.primaryColor.withValues(alpha: .1),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 Icons.chat_bubble_outline_rounded,
                 size: 64,
-                color: AppConstants.primaryColor.withOpacity(0.6),
+                color: AppConstants.primaryColor.withValues(alpha: .6),
               ),
             ),
             const SizedBox(height: 24),
@@ -172,7 +72,7 @@ class ConversationList extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       decoration: BoxDecoration(
         color: conversation.isUnread 
-            ? AppConstants.primaryColor.withOpacity(0.05)
+            ? AppConstants.primaryColor.withValues(alpha: .05)
             : Colors.transparent,
         borderRadius: BorderRadius.circular(16),
       ),
@@ -200,12 +100,12 @@ class ConversationList extends StatelessWidget {
                             end: Alignment.bottomRight,
                             colors: [
                               AppConstants.primaryColor,
-                              AppConstants.primaryColor.withOpacity(0.7),
+                              AppConstants.primaryColor.withValues(alpha: .7),
                             ],
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: AppConstants.primaryColor.withOpacity(0.3),
+                              color: AppConstants.primaryColor.withValues(alpha: .3),
                               blurRadius: 8,
                               offset: const Offset(0, 4),
                             ),
@@ -270,7 +170,7 @@ class ConversationList extends StatelessWidget {
                             ),
                             decoration: BoxDecoration(
                               color: conversation.isUnread
-                                  ? AppConstants.primaryColor.withOpacity(0.1)
+                                  ? AppConstants.primaryColor.withValues(alpha: .1)
                                   : Colors.grey[100],
                               borderRadius: BorderRadius.circular(8),
                             ),
@@ -316,7 +216,7 @@ class ConversationList extends StatelessWidget {
                                 shape: BoxShape.circle,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: AppConstants.primaryColor.withOpacity(0.4),
+                                    color: AppConstants.primaryColor.withValues(alpha: .4),
                                     blurRadius: 4,
                                     offset: const Offset(0, 2),
                                   ),

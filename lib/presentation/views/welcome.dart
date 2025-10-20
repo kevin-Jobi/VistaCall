@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vistacall/bloc/welcome/welcome_state.dart';
-import 'package:vistacall/presentation/widgets/custom_elevated_button.dart.dart';
+import 'package:vistacall/presentation/widgets/custom_widgets/custom_elevated_button.dart.dart';
 import 'package:vistacall/bloc/welcome/welcome_bloc.dart';
 import 'package:vistacall/utils/constants.dart';
 
