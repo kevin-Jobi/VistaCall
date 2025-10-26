@@ -56,7 +56,6 @@ class MainApp extends StatelessWidget {
     final authViewModel = AuthViewModel();
     final firestore = FirebaseFirestore.instance;
 
-    // Manually create bloc instances to avoid context issues
     final doctorListBloc = DoctorListBloc(firestore: firestore);
     final homeBloc = HomeBloc(doctorListBloc: doctorListBloc);
     final splashBloc = SplashBloc();
@@ -94,23 +93,6 @@ class MainApp extends StatelessWidget {
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           themeMode: ThemeMode.light,
-
-          // ThemeData(
-          //   primaryColor: AppConstants.primaryColor,
-          //   scaffoldBackgroundColor: AppConstants.backgroundColor,
-          //   textTheme: const TextTheme(
-          //     bodyMedium: TextStyle(color: Colors.black54),
-          //   ),
-          //   elevatedButtonTheme: ElevatedButtonThemeData(
-          //     style: ElevatedButton.styleFrom(
-          //       backgroundColor: AppConstants.primaryColor,
-          //       foregroundColor: Colors.white,
-          //       shape: RoundedRectangleBorder(
-          //         borderRadius: BorderRadius.circular(30),
-          //       ),
-          //     ),
-          //   ),
-          // ),
           initialRoute: AppConstants.splashRoute,
           routes: {
             AppConstants.appWrapperRoute: (context) => const AppWrapper(),

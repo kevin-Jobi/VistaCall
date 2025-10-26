@@ -1,6 +1,5 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:vistacall/data/models/conversation.dart';
 import 'package:vistacall/utils/constants.dart';
 
@@ -65,13 +64,14 @@ class ConversationList extends StatelessWidget {
     );
   }
 
-  Widget _buildConversationTile(Conversation conversation, BuildContext context) {
+  Widget _buildConversationTile(
+      Conversation conversation, BuildContext context) {
     final formattedTime = _formatTimestamp(conversation.timestamp);
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       decoration: BoxDecoration(
-        color: conversation.isUnread 
+        color: conversation.isUnread
             ? AppConstants.primaryColor.withValues(alpha: .05)
             : Colors.transparent,
         borderRadius: BorderRadius.circular(16),
@@ -105,7 +105,8 @@ class ConversationList extends StatelessWidget {
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: AppConstants.primaryColor.withValues(alpha: .3),
+                              color: AppConstants.primaryColor
+                                  .withValues(alpha: .3),
                               blurRadius: 8,
                               offset: const Offset(0, 4),
                             ),
@@ -154,8 +155,8 @@ class ConversationList extends StatelessWidget {
                               conversation.doctorName,
                               style: TextStyle(
                                 fontSize: 16,
-                                fontWeight: conversation.isUnread 
-                                    ? FontWeight.w700 
+                                fontWeight: conversation.isUnread
+                                    ? FontWeight.w700
                                     : FontWeight.w600,
                                 color: Colors.grey[900],
                               ),
@@ -170,7 +171,8 @@ class ConversationList extends StatelessWidget {
                             ),
                             decoration: BoxDecoration(
                               color: conversation.isUnread
-                                  ? AppConstants.primaryColor.withValues(alpha: .1)
+                                  ? AppConstants.primaryColor
+                                      .withValues(alpha: .1)
                                   : Colors.grey[100],
                               borderRadius: BorderRadius.circular(8),
                             ),
@@ -216,7 +218,8 @@ class ConversationList extends StatelessWidget {
                                 shape: BoxShape.circle,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: AppConstants.primaryColor.withValues(alpha: .4),
+                                    color: AppConstants.primaryColor
+                                        .withValues(alpha: .4),
                                     blurRadius: 4,
                                     offset: const Offset(0, 2),
                                   ),
@@ -247,16 +250,15 @@ class ConversationList extends StatelessWidget {
 
   String _formatTimestamp(DateTime date) {
     final now = DateTime.now();
-    
-    if (date.year == now.year && 
-        date.month == now.month && 
+
+    if (date.year == now.year &&
+        date.month == now.month &&
         date.day == now.day) {
-      final hour = date.hour.toString().padLeft(2, '0');
-      final minute = date.minute.toString().padLeft(2, '0');
-      return '$hour:$minute';
-    } else if (date.year == now.year && 
-               date.month == now.month && 
-               date.day == now.day - 1) {
+      // Use 12-hour format with am/pm
+      return DateFormat('h:mm a').format(date);
+    } else if (date.year == now.year &&
+        date.month == now.month &&
+        date.day == now.day - 1) {
       return 'Yesterday';
     } else if (date.year == now.year) {
       return '${date.day}/${date.month}';

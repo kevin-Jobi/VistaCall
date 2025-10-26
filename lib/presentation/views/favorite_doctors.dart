@@ -1,6 +1,3 @@
-
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vistacall/bloc/favorite/favorite_bloc.dart';
@@ -55,7 +52,8 @@ class FavoriteDoctors extends StatelessWidget {
                 );
               }
               return ListView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 itemCount: state.doctors.length,
                 itemBuilder: (context, index) {
                   final doctor = state.doctors[index];
@@ -69,9 +67,11 @@ class FavoriteDoctors extends StatelessWidget {
                     child: ListTile(
                       leading: CircleAvatar(
                         backgroundColor: colorScheme.surfaceVariant,
-                        backgroundImage: doctor.personal['profileImageUrl'] != null
+                        backgroundImage: doctor.personal['profileImageUrl'] !=
+                                null
                             ? NetworkImage(doctor.personal['profileImageUrl'])
-                            : const AssetImage('assets/images/dentist.png') as ImageProvider,
+                            : const AssetImage('assets/images/dentist.png')
+                                as ImageProvider,
                         radius: 24,
                       ),
                       title: Text(
