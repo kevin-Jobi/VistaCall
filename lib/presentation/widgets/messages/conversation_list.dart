@@ -261,9 +261,11 @@ class ConversationList extends StatelessWidget {
         date.day == now.day - 1) {
       return 'Yesterday';
     } else if (date.year == now.year) {
-      return '${date.day}/${date.month}';
+      // return '${date.day}/${date.month}';
+      return DateFormat('d MMM').format(date);
     } else {
-      return '${date.day}/${date.month}/${date.year.toString().substring(2)}';
+      // return '${date.day}/${date.month}/${date.year.toString().substring(2)}';
+      return  DateFormat('d MMM yyyy').format(date);
     }
   }
 }
