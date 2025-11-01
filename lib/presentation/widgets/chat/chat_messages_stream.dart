@@ -231,7 +231,8 @@ class ChatMessagesStream extends StatelessWidget {
         date.day == now.day - 1) {
       displayText = 'Yesterday';
     } else {
-      displayText = '${date.day}/${date.month}/${date.year}';
+      // displayText = '${date.day}/${date.month}/${date.year}';
+      displayText = DateFormat('d MMM yyyy').format(date);
     }
 
     return Container(
