@@ -3,6 +3,8 @@ import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:vistacall/bloc/appointments/appointments_bloc.dart';
 import 'package:vistacall/bloc/auth/auth_bloc.dart';
@@ -14,6 +16,7 @@ import 'package:vistacall/bloc/messages/messages_bloc.dart';
 import 'package:vistacall/bloc/profile/profile_bloc.dart';
 import 'package:vistacall/bloc/splash/splash_bloc.dart';
 import 'package:vistacall/bloc/welcome/welcome_bloc.dart';
+import 'package:vistacall/consts.dart';
 import 'package:vistacall/data/models/appointment.dart';
 import 'package:vistacall/data/models/doctor.dart';
 import 'package:vistacall/data/services/navigation_service.dart';
@@ -41,6 +44,14 @@ import 'package:vistacall/viewmodels/password_visibility_bloc.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
+  await dotenv.load(fileName: ".env");
+  final apiKey = dotenv.env['GEMINI_API_KEY'];
+
+  if(apiKey == null || apiKey.isEmpty){
+    print('ERROR: GEMINI_API_KEY not found in .env file!');
+    return;
+  }
+  Gemini.init(apiKey: apiKey);
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await FirebaseAppCheck.instance

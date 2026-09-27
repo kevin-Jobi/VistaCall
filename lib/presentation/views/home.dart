@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:vistacall/bloc/home/home_bloc.dart';
 import 'package:vistacall/bloc/doctor_list/doctor_list_bloc.dart';
+import 'package:vistacall/presentation/views/ai_chat_screen.dart';
 import 'package:vistacall/presentation/views/home/home_body.dart';
 import 'package:vistacall/presentation/widgets/custom_widgets/custom_bottom_navbar.dart';
 import 'package:vistacall/presentation/views/home/home_app_bar.dart';
@@ -22,6 +23,15 @@ class Home extends StatelessWidget {
       child: Scaffold(
         appBar: const HomeAppBar(),
         body: const HomeBody(),
+        floatingActionButton: FloatingActionButton.large(
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (_) => SimpleChatScreen()));
+          },
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          child: Image.asset('assets/images/logo.png'),
+        ),
         bottomNavigationBar: CustomBottomNavBar(
           currentIndex: 0,
           onTap: (index) => _handleNavigation(index, context),

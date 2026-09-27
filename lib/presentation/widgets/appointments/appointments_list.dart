@@ -202,12 +202,12 @@ class AppointmentsList extends StatelessWidget {
               width: 120,
               height: 120,
               decoration: BoxDecoration(
-                color: surfaceContainer, // Dynamic light grey
+                // color: surfaceContainer, // Dynamic light grey
                 borderRadius: BorderRadius.circular(60),
                 boxShadow: [
                   BoxShadow(
-                    color: shadowColor, // Dynamic shadow
-                    blurRadius: 20,
+                    color: const Color.fromARGB(255, 189, 188, 188), // Dynamic shadow
+                    blurRadius: 1,
                     offset: const Offset(0, 10),
                   ),
                 ],
@@ -219,11 +219,14 @@ class AppointmentsList extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            Text(
-              isUpcoming ? 'No Upcoming Appointments' : 'No Past Appointments',
-              style: theme.textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.w700,
-                color: onSurface, // Dynamic dark text
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 70),
+              child: Text(
+                isUpcoming ? 'No Upcoming Appointments' : 'No Past Appointments',
+                style: theme.textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: onSurface, // Dynamic dark text
+                ),
               ),
             ),
             const SizedBox(height: 12),
@@ -240,34 +243,34 @@ class AppointmentsList extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            if (isUpcoming) ...[
-              const SizedBox(height: 32),
-              ElevatedButton.icon(
-                onPressed: () {
-                  // Navigate to booking screen
-                },
-                icon: const Icon(Icons.add, size: 18),
-                label: Text(
-                  'Book Appointment',
-                  style: theme.textTheme.labelLarge?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: colorScheme.onPrimary,
-                  ),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: colorScheme.primary, // Dynamic primary
-                  foregroundColor: colorScheme.onPrimary, // Dynamic white text
-                  elevation: 0,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 12,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-              ),
-            ],
+            // if (isUpcoming) ...[
+            //   const SizedBox(height: 32),
+            //   ElevatedButton.icon(
+            //     onPressed: () {
+            //       // Navigate to booking screen
+            //     },
+            //     icon: const Icon(Icons.add, size: 18),
+            //     label: Text(
+            //       'Book Appointment',
+            //       style: theme.textTheme.labelLarge?.copyWith(
+            //         fontWeight: FontWeight.w600,
+            //         color: colorScheme.onPrimary,
+            //       ),
+            //     ),
+            //     style: ElevatedButton.styleFrom(
+            //       backgroundColor: colorScheme.primary, // Dynamic primary
+            //       foregroundColor: colorScheme.onPrimary, // Dynamic white text
+            //       elevation: 0,
+            //       padding: const EdgeInsets.symmetric(
+            //         horizontal: 24,
+            //         vertical: 12,
+            //       ),
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(30),
+            //       ),
+            //     ),
+            //   ),
+            // ],
           ],
         ),
       ),
