@@ -1,7 +1,10 @@
 
+
+
 import 'package:flutter/material.dart';
 import 'package:vistacall/data/models/doctor_category.dart';
 import 'package:vistacall/presentation/widgets/doctor_grid_item.dart';
+import 'package:vistacall/presentation/widgets/section_header.dart';
 
 class DoctorCategoriesGrid extends StatelessWidget {
   final List<DoctorCategory> categories;
@@ -16,40 +19,16 @@ class DoctorCategoriesGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Container(
-                width: 4,
-                height: 24,
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFF42A5F5), Color(0xFF1E88E5)],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-              const SizedBox(width: 12),
-              const Expanded(
-                child: Text(
-                  'Find Doctors for your Health Problem',
-                  style: TextStyle(
-                    fontSize: 19,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFF1A1A1A),
-                    letterSpacing: -0.3,
-                  ),
-                ),
-              ),
-            ],
+          const SectionHeader(
+            title: 'Find Doctors for your Health Problem',
           ),
           const SizedBox(height: 20),
           GridView.builder(
+            padding: EdgeInsets.zero,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 4,
               childAspectRatio: 0.71,

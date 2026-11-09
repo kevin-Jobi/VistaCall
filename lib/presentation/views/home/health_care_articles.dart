@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vistacall/presentation/views/see_all_options/see_all_health_care_article_option.dart';
+import 'package:vistacall/presentation/widgets/section_header.dart';
 import 'package:vistacall/presentation/widgets/health_care_articles_contant_and_widgets/health_article_home_page_section/health_news_card.dart';
-
 
 class HealthCareArticles extends StatelessWidget {
   @override
@@ -10,35 +10,14 @@ class HealthCareArticles extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20), 
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Text(
-                'Health Care Articles',
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                  color: Colors.black87,
-                ),
-              ),
-              TextButton(
-                onPressed: () {
-                  Get.to(() => SeeAllHealthArticles(),
-                      transition: Transition.rightToLeftWithFade);
-                },
-                child: const Text(
-                  'See All',
-                  style: TextStyle(
-                    color: Color(0xFF4A78FF),
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ],
-          ),
+        SectionHeader(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          title: 'Health Care Articles',
+          actionLabel: 'See All',
+          onAction: () {
+            Get.to(() => SeeAllHealthArticles(),
+                transition: Transition.rightToLeftWithFade);
+          },
         ),
         const SizedBox(height: 16),
         const SingleChildScrollView(

@@ -30,6 +30,8 @@ class Home extends StatelessWidget {
           },
           backgroundColor: Colors.transparent,
           elevation: 0,
+          splashColor: Colors.transparent,
+          highlightElevation: 0,
           child: Image.asset('assets/images/logo.png'),
         ),
         bottomNavigationBar: CustomBottomNavBar(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vistacall/presentation/views/home/price_range_dialog.dart';
-import 'package:vistacall/utils/constants.dart';
 import 'package:vistacall/viewmodels/home_viewmodel.dart';
 
 class SearchSection extends StatefulWidget {
@@ -57,6 +56,8 @@ class _SearchSectionState extends State<SearchSection> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -68,8 +69,11 @@ class _SearchSectionState extends State<SearchSection> {
                 width: 4,
                 height: 28,
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFF42A5F5), Color(0xFF1E88E5)],
+                  gradient: LinearGradient(
+                    colors: [
+                      colorScheme.primary,
+                      colorScheme.primary.withValues(alpha: 0.5),
+                    ],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                   ),
@@ -77,13 +81,13 @@ class _SearchSectionState extends State<SearchSection> {
                 ),
               ),
               const SizedBox(width: 12),
-              const Text(
+              Text(
                 'FIND YOUR DOCTOR',
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 22,
                   fontWeight: FontWeight.w800,
-                  color: AppConstants.primaryColor,
-                  letterSpacing: 0.3,
+                  color: colorScheme.onSurface,
+                  letterSpacing: 0.4,
                 ),
               ),
             ],
@@ -94,8 +98,8 @@ class _SearchSectionState extends State<SearchSection> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(
             children: [
-              Expanded(child: _buildSearchField()),
-              const SizedBox(width: 14),
+              Expanded(child: _buildSearchField(context)),
+              const SizedBox(width: 12),
               _buildFilterButton(context),
             ],
           ),
@@ -104,30 +108,27 @@ class _SearchSectionState extends State<SearchSection> {
     );
   }
 
-  Widget _buildSearchField() {
+  Widget _buildSearchField(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final primary = colorScheme.primary;
+
     return Container(
       height: 58,
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(30),
+        color: colorScheme.surface,
+        borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          width: 2,
+          width: 1.5,
           color: _hasText
-              ? AppConstants.primaryColor.withOpacity(0.3)
-              : const Color(0xFFE3F2FD),
+              ? primary.withValues(alpha: 0.5)
+              : colorScheme.outline.withValues(alpha: 0.3),
         ),
         boxShadow: [
           BoxShadow(
-            color: AppConstants.primaryColor.withOpacity(_hasText ? 0.2 : 0.12),
-            blurRadius: 20,
+            color: primary.withValues(alpha: _hasText ? 0.16 : 0.07),
+            blurRadius: 18,
             offset: const Offset(0, 6),
             spreadRadius: -2,
-          ),
-          BoxShadow(
-            color: const Color(0xFF42A5F5).withOpacity(_hasText ? 0.15 : 0.08),
-            blurRadius: 12,
-            offset: const Offset(0, 2),
-            spreadRadius: 0,
           ),
         ],
       ),
@@ -138,23 +139,16 @@ class _SearchSectionState extends State<SearchSection> {
             margin: const EdgeInsets.all(8),
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  AppConstants.primaryColor.withOpacity(_hasText ? 0.25 : 0.15),
-                  AppConstants.primaryColor.withOpacity(_hasText ? 0.12 : 0.08),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+              color: primary.withValues(alpha: _hasText ? 0.16 : 0.10),
               borderRadius: BorderRadius.circular(14),
             ),
             child: Icon(
-              _hasText ? Icons.search : Icons.search_rounded,
-              color: AppConstants.primaryColor,
-              size: 24,
+              Icons.search_rounded,
+              color: primary,
+              size: 22,
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 6),
           Expanded(
             child: TextField(
               controller: _searchController,
@@ -168,10 +162,10 @@ class _SearchSectionState extends State<SearchSection> {
               decoration: InputDecoration(
                 hintText: 'Search doctors, specialties...',
                 hintStyle: TextStyle(
-                  color: Colors.grey[400],
-                  fontSize: 15,
+                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+                  fontSize: 14.5,
                   fontWeight: FontWeight.w400,
-                  letterSpacing: 0.2,
+                  letterSpacing: 0.1,
                 ),
                 border: InputBorder.none,
                 contentPadding: const EdgeInsets.symmetric(
@@ -180,18 +174,18 @@ class _SearchSectionState extends State<SearchSection> {
                 ),
                 suffixIcon: _hasText
                     ? IconButton(
-                        icon: const Icon(
-                          Icons.clear_rounded,
-                          color: AppConstants.primaryColor,
+                        icon: Icon(
+                          Icons.cancel_rounded,
+                          color: colorScheme.onSurfaceVariant,
                           size: 20,
                         ),
                         onPressed: _clearSearch,
                       )
                     : null,
               ),
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 15,
-                color: Color(0xFF1A1A1A),
+                color: colorScheme.onSurface,
                 fontWeight: FontWeight.w500,
                 letterSpacing: 0.1,
               ),
@@ -203,79 +197,56 @@ class _SearchSectionState extends State<SearchSection> {
   }
 
   Widget _buildFilterButton(BuildContext context) {
-    return GestureDetector(
-      onTap: () => _showFilterDialog(context),
-      child: Container(
-        width: 58,
-        height: 58,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              AppConstants.primaryColor,
-              AppConstants.primaryColor.withOpacity(0.85),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.circular(18),
-          boxShadow: [
-            BoxShadow(
-              color: AppConstants.primaryColor.withOpacity(0.4),
-              blurRadius: 16,
-              offset: const Offset(0, 6),
-              spreadRadius: 0,
-            ),
-            BoxShadow(
-              color: Colors.white.withOpacity(0.3),
-              blurRadius: 8,
-              offset: const Offset(-2, -2),
-              spreadRadius: 0,
-            ),
-          ],
+    final colorScheme = Theme.of(context).colorScheme;
+    final primary = colorScheme.primary;
+    final onPrimary = colorScheme.onPrimary;
+    final deepPrimary =
+        Color.alphaBlend(Colors.black.withValues(alpha: 0.2), primary);
+
+    return Container(
+      width: 58,
+      height: 58,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [primary, deepPrimary],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
         ),
-        child: Stack(
-          children: [
-            // Shine effect
-            Positioned(
-              top: 6,
-              right: 6,
-              child: Container(
-                width: 18,
-                height: 18,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.white.withOpacity(0.5),
-                      Colors.white.withOpacity(0.0),
-                    ],
-                  ),
-                  borderRadius: BorderRadius.circular(9),
-                ),
-              ),
-            ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.tune_rounded,
-                    color: Colors.white,
-                    size: 24,
-                  ),
-                  if (_hasText)
-                    Container(
-                      margin: const EdgeInsets.only(top: 2),
-                      width: 8,
-                      height: 8,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(4),
-                      ),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: primary.withValues(alpha: 0.35),
+            blurRadius: 16,
+            offset: const Offset(0, 6),
+            spreadRadius: -2,
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(20),
+          onTap: () => _showFilterDialog(context),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Icon(Icons.tune_rounded, color: onPrimary, size: 24),
+              if (_hasText)
+                Positioned(
+                  top: 13,
+                  right: 13,
+                  child: Container(
+                    width: 10,
+                    height: 10,
+                    decoration: BoxDecoration(
+                      color: onPrimary,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: primary, width: 2),
                     ),
-                ],
-              ),
-            ),
-          ],
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );

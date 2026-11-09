@@ -66,29 +66,37 @@ class HomeBody extends StatelessWidget {
         : viewModel.getDoctorCategories(homeState);
 
     return RefreshIndicator(
-      color: colorScheme.onPrimary,
-      backgroundColor: theme.scaffoldBackgroundColor,
+      color: colorScheme.primary,
+      backgroundColor: colorScheme.surface,
       onRefresh: () async => viewModel.refreshData(),
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
-        padding: const EdgeInsets.all(16.0),
+        // Sections carry their own horizontal padding; bottom space keeps
+        // the last item clear of the large FAB.
+        padding: const EdgeInsets.only(top: 20, bottom: 110),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildSearchSection(context, viewModel),
-            const SizedBox(height: 20),
-            _buildCategoriesSection(
-                context, categoriesToShow, viewModel), // Pass context
+            const SizedBox(height: 8),
+            _buildCategoriesSection(context, categoriesToShow, viewModel),
 
             // Search results section
             if (viewModel.hasSearchResults) ...[
-              const SizedBox(height: 24),
-              _buildSearchResultsHeader(context, viewModel.searchResultCount),
-              const SizedBox(height: 12),
-              _buildDoctorsSection(context, viewModel),
+              const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: _buildSearchResultsHeader(
+                    context, viewModel.searchResultCount),
+              ),
+              const SizedBox(height: 14),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: _buildDoctorsSection(context, viewModel),
+              ),
             ],
 
-            const SizedBox(height: 32),
+            const SizedBox(height: 24),
             HealthCareArticles(),
             const SizedBox(height: 20),
           ],
@@ -98,8 +106,6 @@ class HomeBody extends StatelessWidget {
   }
 
   Widget _buildSearchSection(BuildContext context, HomeViewModel viewModel) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
     return SearchSection(
       onSearchChanged: viewModel.setSearchQuery,
       onClear: viewModel.clearSearch,
@@ -107,59 +113,75 @@ class HomeBody extends StatelessWidget {
     );
   }
 
-  // Fixed: Pass context as parameter
-  Widget _buildCategoriesSection(
-      BuildContext context, // Add context parameter
-      List<DoctorCategory> categories,
-      HomeViewModel viewModel) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
+  Widget _buildCategoriesSection(BuildContext context,
+      List<DoctorCategory> categories, HomeViewModel viewModel) {
     return DoctorCategoriesGrid(
       categories: categories,
-      onCategoryTap: (category) => viewModel.navigateToDepartment(
-          context, category.title), // Now context is available
+      onCategoryTap: (category) =>
+          viewModel.navigateToDepartment(context, category.title),
     );
   }
 
   Widget _buildErrorState(
       BuildContext context, String error, HomeViewModel viewModel) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.symmetric(horizontal: 32),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              Icons.error_outline,
-              size: 64,
-              color: colorScheme.error,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              error,
-              style: TextStyle(
-                fontSize: 16,
-                color: colorScheme.error,
-                fontWeight: FontWeight.w500,
+            Container(
+              width: 104,
+              height: 104,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: colorScheme.error.withValues(alpha: 0.08),
               ),
-              textAlign: TextAlign.center,
+              child: Center(
+                child: Container(
+                  width: 72,
+                  height: 72,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: colorScheme.error.withValues(alpha: 0.12),
+                  ),
+                  child: Icon(
+                    Icons.error_outline_rounded,
+                    size: 34,
+                    color: colorScheme.error,
+                  ),
+                ),
+              ),
             ),
             const SizedBox(height: 24),
+            Text(
+              error,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 16,
+                height: 1.5,
+                fontWeight: FontWeight.w500,
+                color: colorScheme.error,
+              ),
+            ),
+            const SizedBox(height: 28),
             ElevatedButton.icon(
               onPressed: viewModel.refreshData,
-              icon: const Icon(Icons.refresh),
+              icon: const Icon(Icons.refresh_rounded, size: 20),
               label: const Text('Retry'),
               style: ElevatedButton.styleFrom(
-                // backgroundColor: AppConstants.primaryColor,
-                // foregroundColor: Colors.white,
                 backgroundColor: colorScheme.primary,
                 foregroundColor: colorScheme.onPrimary,
+                elevation: 0,
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                    const EdgeInsets.symmetric(horizontal: 28, vertical: 14),
+                shape: const StadiumBorder(),
+                textStyle: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ],
@@ -169,8 +191,7 @@ class HomeBody extends StatelessWidget {
   }
 
   Widget _buildSearchResultsHeader(BuildContext context, int count) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Row(
       children: [
@@ -180,11 +201,11 @@ class HomeBody extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                // Color(0xFF42A5F5),
-                // Color(0xFF1E88E5),
                 colorScheme.primary,
-                colorScheme.primary.withValues(alpha: 0.8)
+                colorScheme.primary.withValues(alpha: 0.5),
               ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
             ),
             borderRadius: BorderRadius.circular(2),
           ),
@@ -196,7 +217,7 @@ class HomeBody extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w700,
-              // color: Color(0xFF1A1A1A),
+              letterSpacing: -0.3,
               color: colorScheme.onSurface,
             ),
           ),
@@ -204,21 +225,14 @@ class HomeBody extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
-            // color: AppConstants.primaryColor.withOpacity(0.1),
-            color: colorScheme.primaryContainer,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              // color: AppConstants.primaryColor.withOpacity(0.2),
-              color: colorScheme.primary.withValues(alpha: 0.2),
-              width: 1,
-            ),
+            color: colorScheme.primary.withValues(alpha: 0.10),
+            borderRadius: BorderRadius.circular(20),
           ),
           child: Text(
             '$count Found',
             style: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w500,
-              // color: AppConstants.primaryColor,
+              fontSize: 12.5,
+              fontWeight: FontWeight.w600,
               color: colorScheme.primary,
             ),
           ),
@@ -228,18 +242,16 @@ class HomeBody extends StatelessWidget {
   }
 
   Widget _buildDoctorsSection(BuildContext context, HomeViewModel viewModel) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
     if (viewModel.filteredDoctors.isEmpty) {
       return _buildNoResultsSection(context, viewModel);
     }
 
     return ListView.separated(
+      padding: EdgeInsets.zero,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: viewModel.filteredDoctors.length,
-      separatorBuilder: (context, index) => const SizedBox(height: 12),
+      separatorBuilder: (context, index) => const SizedBox(height: 14),
       itemBuilder: (context, index) {
         final doctor = viewModel.filteredDoctors[index];
         return DoctorCard(
@@ -251,59 +263,110 @@ class HomeBody extends StatelessWidget {
     );
   }
 
-  Widget _buildNoResultsSection(context, HomeViewModel viewModel) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+  Widget _buildNoResultsSection(
+      BuildContext context, HomeViewModel viewModel) {
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
-      padding: const EdgeInsets.all(24),
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(24, 32, 24, 24),
       decoration: BoxDecoration(
-        // color: Colors.grey[50],
         color: colorScheme.surface,
-        borderRadius: BorderRadius.circular(16),
-        // border: Border.all(color: Colors.grey[200]!),
-        border: Border.all(color: colorScheme.outline),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(
+          color: colorScheme.outline.withValues(alpha: 0.35),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.04),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
       ),
       child: Column(
         children: [
-          Icon(
-            Icons.search_off,
-            size: 64,
-            // color: Colors.grey[400],
-            color: colorScheme.onSurfaceVariant,
+          Container(
+            width: 96,
+            height: 96,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: colorScheme.primary.withValues(alpha: 0.08),
+            ),
+            child: Center(
+              child: Container(
+                width: 68,
+                height: 68,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: colorScheme.primary.withValues(alpha: 0.12),
+                ),
+                child: Icon(
+                  Icons.search_off_rounded,
+                  size: 32,
+                  color: colorScheme.primary,
+                ),
+              ),
+            ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 20),
           Text(
             'No doctors found',
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: colorScheme.onSurfaceVariant
+              fontWeight: FontWeight.w700,
+              letterSpacing: -0.2,
+              color: colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             'Try adjusting your search terms or browse categories above',
-            style: TextStyle(color: Colors.grey[500]),
             textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 14,
+              height: 1.5,
+              color: colorScheme.onSurfaceVariant,
+            ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 24),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              TextButton.icon(
-                onPressed: viewModel.clearSearch,
-                icon: const Icon(Icons.clear),
-                label: const Text('Clear Search'),
+              Expanded(
+                child: TextButton.icon(
+                  onPressed: viewModel.clearSearch,
+                  icon: const Icon(Icons.clear, size: 18),
+                  label: const Text('Clear Search'),
+                  style: TextButton.styleFrom(
+                    foregroundColor: colorScheme.primary,
+                    backgroundColor:
+                        colorScheme.primary.withValues(alpha: 0.08),
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: const StadiumBorder(),
+                    textStyle: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
               ),
-              ElevatedButton.icon(
-                onPressed: () => viewModel.refreshData(),
-                icon: const Icon(Icons.refresh),
-                label: const Text('Try Again'),
-                style: ElevatedButton.styleFrom(
-                  // backgroundColor: AppConstants.primaryColor,
-                  backgroundColor: colorScheme.primary,
-                  foregroundColor: colorScheme.onPrimary,
+              const SizedBox(width: 12),
+              Expanded(
+                child: ElevatedButton.icon(
+                  onPressed: () => viewModel.refreshData(),
+                  icon: const Icon(Icons.refresh, size: 18),
+                  label: const Text('Try Again'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: colorScheme.primary,
+                    foregroundColor: colorScheme.onPrimary,
+                    elevation: 0,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: const StadiumBorder(),
+                    textStyle: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
               ),
             ],

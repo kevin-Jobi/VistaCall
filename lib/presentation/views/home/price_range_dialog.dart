@@ -160,7 +160,7 @@ Widget _buildContent(BuildContext context,
           children: [
             ...priceRanges.map((item) {
               final range = item['range'] as String;
-              final icon = item['icon'] as IconData;
+              // final icon = item['icon'] as IconData;
               final isSelected = selected == range;
 
               return Padding(
@@ -169,7 +169,7 @@ Widget _buildContent(BuildContext context,
                   context: context,
                   dialogContext: dialogContext,
                   range: range,
-                  icon: icon,
+                  // icon: icon,
                   isSelected: isSelected,
                 ),
               );
@@ -187,7 +187,7 @@ Widget _buildPriceOption({
   required BuildContext context,
   required BuildContext dialogContext,
   required String range,
-  required IconData icon,
+  // required IconData icon,
   required bool isSelected,
 }) {
   return Material(
@@ -213,22 +213,22 @@ Widget _buildPriceOption({
         ),
         child: Row(
           children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: isSelected
-                    ? AppConstants.primaryColor.withOpacity(0.15)
-                    : Colors.white,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Icon(
-                icon,
-                color:
-                    isSelected ? AppConstants.primaryColor : Colors.grey[600],
-                size: 22,
-              ),
-            ),
-            const SizedBox(width: 14),
+            // Container(
+            //   padding: const EdgeInsets.all(8),
+            //   decoration: BoxDecoration(
+            //     color: isSelected
+            //         ? AppConstants.primaryColor.withOpacity(0.15)
+            //         : Colors.white,
+            //     borderRadius: BorderRadius.circular(10),
+            //   ),
+            //   child: Icon(
+            //     icon,
+            //     color:
+            //         isSelected ? AppConstants.primaryColor : Colors.grey[600],
+            //     size: 22,
+            //   ),
+            // ),
+            // const SizedBox(width: 14),
             Expanded(
               child: Text(
                 '₹$range',
