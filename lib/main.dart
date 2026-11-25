@@ -43,21 +43,100 @@ import 'package:vistacall/viewmodels/home_viewmodel.dart';
 import 'package:vistacall/viewmodels/password_visibility_bloc.dart';
 import 'package:provider/provider.dart';
 
-void main() async {
-  await dotenv.load(fileName: ".env");
-  final apiKey = dotenv.env['GEMINI_API_KEY'];
+// void main() async {
+//   await dotenv.load(fileName: ".env");
+//   final apiKey = dotenv.env['GEMINI_API_KEY'];
 
-  if(apiKey == null || apiKey.isEmpty){
-    print('ERROR: GEMINI_API_KEY not found in .env file!');
-    return;
-  }
-  Gemini.init(apiKey: apiKey);
+//   if(apiKey == null || apiKey.isEmpty){
+//     print('ERROR: GEMINI_API_KEY not found in .env file!');
+//     return;
+//   }
+//   Gemini.init(apiKey: apiKey);
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+//   await FirebaseAppCheck.instance
+//       .activate(androidProvider: AndroidProvider.debug);
+//   runApp(const MainApp());
+// }
+
+// void main() async {
+//   // Initialize Flutter before using plugins.
+//   WidgetsFlutterBinding.ensureInitialized();
+
+//   // Gemini is optional. Its failure should not prevent app startup.
+//   try {
+//     await dotenv.load(fileName: ".env");
+
+//     final apiKey = dotenv.env['GEMINI_API_KEY'];
+
+//     if (apiKey != null && apiKey.isNotEmpty) {
+//       Gemini.init(apiKey: apiKey);
+//       debugPrint('Gemini initialized successfully');
+//     } else {
+//       debugPrint('WARNING: GEMINI_API_KEY is missing');
+//     }
+//   } catch (e) {
+//     debugPrint('Gemini environment loading failed: $e');
+//   }
+
+//   // Firebase initialization is required by this application.
+//   await Firebase.initializeApp(
+//     options: DefaultFirebaseOptions.currentPlatform,
+//   );
+
+//   // App Check should not hold up startup indefinitely.
+//   try {
+//     await FirebaseAppCheck.instance
+//         .activate(androidProvider: AndroidProvider.debug)
+//         .timeout(const Duration(seconds: 10));
+//   } catch (e) {
+//     debugPrint('Firebase App Check activation failed: $e');
+//   }
+
+//   debugPrint('Starting VistaCall...');
+
+//   runApp(const MainApp());
+// }
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await FirebaseAppCheck.instance
-      .activate(androidProvider: AndroidProvider.debug);
+
+  // Gemini is optional. Never block app startup because of its API key.
+  try {
+    await dotenv.load(fileName: ".env");
+
+    final apiKey = dotenv.env['GEMINI_API_KEY'];
+
+    if (apiKey != null && apiKey.isNotEmpty) {
+      Gemini.init(apiKey: apiKey);
+      debugPrint('Gemini initialized successfully');
+    } else {
+      debugPrint('WARNING: GEMINI_API_KEY is missing');
+    }
+  } catch (e) {
+    debugPrint('Gemini initialization failed: $e');
+  }
+
+  // Initialize Firebase.
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  // App Check should not block startup indefinitely.
+  try {
+    await FirebaseAppCheck.instance
+        .activate(androidProvider: AndroidProvider.debug)
+        .timeout(const Duration(seconds: 10));
+  } catch (e) {
+    debugPrint('App Check initialization failed: $e');
+  }
+
+  debugPrint('Starting VistaCall');
+
   runApp(const MainApp());
 }
+
+
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});

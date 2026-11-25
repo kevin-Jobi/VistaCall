@@ -26,8 +26,8 @@ if (flutterVersionName == null) {
 
 android {
     namespace = "com.example.vistacall"
-    compileSdk = flutter.compileSdkVersion
-    ndkVersion = "26.1.10909125"
+    compileSdk = 37
+    ndkVersion = "28.2.13676358"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
